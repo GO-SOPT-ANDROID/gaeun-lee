@@ -15,18 +15,28 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.singupCompleteButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("id",binding.id.text.toString())
-            intent.putExtra("password",binding.password.text.toString())
-            intent.putExtra("name",binding.name.text.toString())
-            intent.putExtra("mbti",binding.mbti.text.toString())
-            setResult(RESULT_OK,intent)
-            finish()
-            Snackbar.make(
-                binding.root,
-                "로그인에 성공했습니다.",
-                Snackbar.LENGTH_SHORT
-            ).show()
+            if (binding.id.text.length in 6..10 && binding.password.text.length in 8..12){
+                val intent = Intent(this, MainActivity::class.java)
+
+                intent.putExtra("id",binding.id.text.toString())
+                intent.putExtra("password",binding.password.text.toString())
+                intent.putExtra("name",binding.name.text.toString())
+                intent.putExtra("speciality",binding.mbti.text.toString())
+                setResult(RESULT_OK,intent)
+                finish()
+                Snackbar.make(
+                    binding.root,
+                    "회원가입이 완료되었다.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
+            else{
+                Snackbar.make(
+                    binding.root,
+                    "회원가입이 실패했다.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
 
 
         }
