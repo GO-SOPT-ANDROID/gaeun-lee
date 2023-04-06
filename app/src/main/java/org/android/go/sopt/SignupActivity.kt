@@ -4,6 +4,7 @@ package org.android.go.sopt
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.android.material.snackbar.Snackbar
 import org.android.go.sopt.databinding.ActivitySignupBinding
 
 class SignupActivity : AppCompatActivity() {
@@ -21,6 +22,11 @@ class SignupActivity : AppCompatActivity() {
             intent.putExtra("mbti",binding.mbti.text.toString())
             setResult(RESULT_OK,intent)
             finish()
+            Snackbar.make(
+                binding.root,
+                "로그인에 성공했습니다.",
+                Snackbar.LENGTH_SHORT
+            ).show()
 
 
         }
