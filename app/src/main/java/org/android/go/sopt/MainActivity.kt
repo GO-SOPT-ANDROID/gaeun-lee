@@ -12,10 +12,10 @@ import org.android.go.sopt.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    private var id:String = ""
-    private var password:String = ""
-    private var name:String = ""
-    private var mbti:String = ""
+    private lateinit var id:String
+    private lateinit var password:String
+    private lateinit var name:String
+    private lateinit var speciality:String
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 id = result.data?.getStringExtra("id") ?: ""
                 password = result.data?.getStringExtra("password")?:""
                 name= result.data?.getStringExtra("name")?:""
-                mbti = result.data?.getStringExtra("mbti")?:""
+                speciality = result.data?.getStringExtra("speciality")?:""
 
 
             }
@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.loginButton.setOnClickListener{
 
-            Log.d("MainActivity","아이디 : ${id}")
-            Log.d("MainActivity","아이디 : ${binding.id.text}")
 
             if(id== binding.id.text.toString()){
 
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this,IntroduceActivity::class.java)
 
                 intent.putExtra("name",name)
-                intent.putExtra("mbti",mbti)
+                intent.putExtra("speciality",speciality)
                 startActivity(intent)
             }
 
