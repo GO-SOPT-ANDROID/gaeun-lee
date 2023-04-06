@@ -18,13 +18,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/idText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:text="ID"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -47,8 +47,8 @@
         android:id="@+id/passwordText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="PW"
+        android:layout_marginTop="30dp"
+        android:text="비밀번호"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/password"
@@ -64,18 +64,38 @@
         app:layout_constraintEnd_toEndOf="@id/id"
         app:layout_constraintStart_toStartOf="@id/id"
         app:layout_constraintTop_toBottomOf="@id/passwordText"
-        android:inputType="numberPassword"/>
+        android:inputType="textPassword"/>
+
+    <TextView
+        android:id="@+id/nameText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="이름"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/id"
+        app:layout_constraintTop_toBottomOf="@id/password" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="이름 입력하세요"
+        app:layout_constraintEnd_toEndOf="@id/id"
+        app:layout_constraintStart_toStartOf="@id/id"
+        app:layout_constraintTop_toBottomOf="@id/nameText" />
 
     <TextView
         android:id="@+id/mbtiText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="ID"
+        android:layout_marginTop="30dp"
+        android:text="특기"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/id"
-        app:layout_constraintTop_toBottomOf="@id/password" />
+        app:layout_constraintTop_toBottomOf="@id/name" />
 
     <EditText
         android:id="@+id/mbti"
@@ -85,6 +105,8 @@
         app:layout_constraintEnd_toEndOf="@id/id"
         app:layout_constraintStart_toStartOf="@id/id"
         app:layout_constraintTop_toBottomOf="@id/mbtiText" />
+
+
 
     <Button
         android:id="@+id/singupCompleteButton"

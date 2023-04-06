@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="@id/id"
         app:layout_constraintStart_toStartOf="@id/id"
         app:layout_constraintTop_toBottomOf="@id/passwordText"
-        android:inputType="numberPassword"/>
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/loginButton"
