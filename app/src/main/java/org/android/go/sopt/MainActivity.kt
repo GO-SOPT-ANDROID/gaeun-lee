@@ -15,10 +15,10 @@ import org.android.go.sopt.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
-    private lateinit var id:String
-    private lateinit var password:String
-    private lateinit var name:String
-    private lateinit var speciality:String
+    private lateinit var id: String
+    private lateinit var password: String
+    private lateinit var name: String
+    private lateinit var speciality: String
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -29,61 +29,48 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if (result.resultCode == Activity.RESULT_OK){
-                id = result.data?.getStringExtra("id") ?: ""
-                password = result.data?.getStringExtra("password")?:""
-                name= result.data?.getStringExtra("name")?:""
-                speciality = result.data?.getStringExtra("speciality")?:""
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    id = result.data?.getStringExtra("id") ?: ""
+                    password = result.data?.getStringExtra("password") ?: ""
+                    name = result.data?.getStringExtra("name") ?: ""
+                    speciality = result.data?.getStringExtra("speciality") ?: ""
 
 
+                }
             }
-        }
 
 
 
-        binding.loginButton.setOnClickListener{
+        binding.loginButton.setOnClickListener {
 
 
-            if(id== binding.id.text.toString()){
+            if (id == binding.id.text.toString()) {
 
 
+                val intent = Intent(this, IntroduceActivity::class.java)
 
-                val intent = Intent(this,IntroduceActivity::class.java)
-
-                intent.putExtra("name",name)
-                intent.putExtra("speciality",speciality)
+                intent.putExtra("name", name)
+                intent.putExtra("speciality", speciality)
                 startActivity(intent)
             }
 
         }
 
 
-
-
-
         binding.signupButton.setOnClickListener {
-            val intent = Intent(this,SignupActivity::class.java)
+            val intent = Intent(this, SignupActivity::class.java)
             resultLauncher.launch(intent)
         }
 
-        binding.root.setOnClickListener {
-            hidKeyboard()
-        }
-
-
 
     }
 
-    private fun hidKeyboard() {
-        val imm:InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken,InputMethodManager.HIDE_NOT_ALWAYS)
-
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        this.currentFocus?.let { hideKeyboard(it) }
+        return super.dispatchTouchEvent(ev)
     }
-
-
-
-
 
 
 }

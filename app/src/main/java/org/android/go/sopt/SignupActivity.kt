@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import com.google.android.material.snackbar.Snackbar
 import org.android.go.sopt.databinding.ActivitySignupBinding
@@ -16,9 +17,6 @@ class SignupActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.root.setOnClickListener {
-            hidKeyboard()
-        }
 
         binding.singupCompleteButton.setOnClickListener {
             if (binding.id.text.length in 6..10 && binding.password.text.length in 8..12){
@@ -47,12 +45,10 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun hidKeyboard() {
-        val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        this.currentFocus?.let { hideKeyboard(it) }
+        return super.dispatchTouchEvent(ev)
     }
-
 
 
 }
