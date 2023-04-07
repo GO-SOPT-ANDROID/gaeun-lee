@@ -1,10 +1,13 @@
 package org.android.go.sopt
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -55,12 +58,29 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+
+
+
         binding.signupButton.setOnClickListener {
             val intent = Intent(this,SignupActivity::class.java)
             resultLauncher.launch(intent)
         }
 
+        binding.root.setOnClickListener {
+            hidKeyboard()
+        }
+
+
+
     }
+
+    private fun hidKeyboard() {
+        val imm:InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken,InputMethodManager.HIDE_NOT_ALWAYS)
+
+    }
+
 
 
 
