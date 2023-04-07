@@ -14,22 +14,17 @@ import org.android.go.sopt.databinding.ActivityMainBinding
 class IntroduceActivity : AppCompatActivity() {
     lateinit var binding: ActivityIntroduceBinding
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityIntroduceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
-
         var name = intent.getStringExtra("name") ?: ""
-        var speciality = intent.getStringExtra("speciality")?:""
+        var speciality = intent.getStringExtra("speciality") ?: ""
 
         binding.name.text = "이름 : $name"
         binding.specialty.text = "특기 : $speciality"
-
-
-
 
 
     }
