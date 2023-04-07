@@ -18,14 +18,14 @@ class SignupActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        binding.singupCompleteButton.setOnClickListener {
-            if (binding.id.text.length in 6..10 && binding.password.text.length in 8..12){
+        binding.btnSignup.setOnClickListener {
+            if (binding.etId.text.length in 6..10 && binding.etPassword.text.length in 8..12){
                 val intent = Intent(this, MainActivity::class.java)
 
-                intent.putExtra("id",binding.id.text.toString())
-                intent.putExtra("password",binding.password.text.toString())
-                intent.putExtra("name",binding.name.text.toString())
-                intent.putExtra("speciality",binding.mbti.text.toString())
+                intent.putExtra("id",binding.etId.text.toString())
+                intent.putExtra("password",binding.etPassword.text.toString())
+                intent.putExtra("name",binding.etName.text.toString())
+                intent.putExtra("speciality",binding.etSpeciality.text.toString())
                 setResult(RESULT_OK,intent)
                 finish()
                 Snackbar.make(

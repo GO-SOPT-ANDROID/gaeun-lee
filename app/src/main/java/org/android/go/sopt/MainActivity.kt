@@ -43,10 +43,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        binding.loginButton.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
 
 
-            if (id == binding.id.text.toString()) {
+            if (id == binding.etId.text.toString()) {
 
 
                 val intent = Intent(this, IntroduceActivity::class.java)
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        binding.signupButton.setOnClickListener {
+        binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
             resultLauncher.launch(intent)
         }
