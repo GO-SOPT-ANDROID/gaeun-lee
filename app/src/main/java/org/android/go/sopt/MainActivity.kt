@@ -41,28 +41,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-
-
-        binding.btnLogin.setOnClickListener {
-
-
-            if (id == binding.etId.text.toString()) {
-
-
-                val intent = Intent(this, IntroduceActivity::class.java)
-
-                intent.putExtra("name", name)
-                intent.putExtra("speciality", speciality)
-                startActivity(intent)
-            }
-
-        }
-
-
-        binding.btnSignup.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
-            resultLauncher.launch(intent)
-        }
+        clickLogin()
+        clickSignup()
 
 
     }
@@ -70,6 +50,32 @@ class MainActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         this.currentFocus?.let { hideKeyboard(it) }
         return super.dispatchTouchEvent(ev)
+    }
+
+
+    private fun clickLogin() {
+        binding.btnLogin.setOnClickListener {
+
+
+            if (id == binding.etId.text.toString() && password == binding.etPassword.text.toString()) {
+
+
+                val intent = Intent(this, IntroduceActivity::class.java)
+
+                intent.putExtra("name", name)
+                intent.putExtra("speciality", speciality)
+                startActivity(intent)
+
+            }
+
+        }
+    }
+
+    private fun clickSignup() {
+        binding.btnSignup.setOnClickListener {
+            val intent = Intent(this, SignupActivity::class.java)
+            resultLauncher.launch(intent)
+        }
     }
 
 
