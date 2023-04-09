@@ -15,7 +15,15 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        signUp()
+    }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        this.currentFocus?.let { hideKeyboard(it) }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    private fun signUp(){
         binding.btnSignup.setOnClickListener {
             if (binding.etId.text.length in 6..10 && binding.etPassword.text.length in 8..12){
                 val intent = Intent(this, MainActivity::class.java)
@@ -43,10 +51,6 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        this.currentFocus?.let { hideKeyboard(it) }
-        return super.dispatchTouchEvent(ev)
-    }
 
 
 }
