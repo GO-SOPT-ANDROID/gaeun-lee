@@ -2,6 +2,7 @@ package org.android.go.sopt
 
 import android.app.Activity
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -33,13 +34,9 @@ class MainActivity : AppCompatActivity() {
         ) {
             clickLogin()
             clickSignup()
-        }
-        else{
+        } else {
             alreadyLogin()
         }
-
-
-
 
 
     }
@@ -58,15 +55,17 @@ class MainActivity : AppCompatActivity() {
 
 
                 val intent = Intent(this, IntroduceActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
 
-                MySharedPreferences.setUserId(this,id)
-                MySharedPreferences.setUserPass(this,password)
-                MySharedPreferences.setUserName(this,name)
-                MySharedPreferences.setUserSpec(this,speciality)
+                MySharedPreferences.setUserId(this, id)
+                MySharedPreferences.setUserPass(this, password)
+                MySharedPreferences.setUserName(this, name)
+                MySharedPreferences.setUserSpec(this, speciality)
 
                 intent.putExtra("name", name)
                 intent.putExtra("speciality", speciality)
                 startActivity(intent)
+                finish()
 
             }
 
@@ -91,13 +90,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun alreadyLogin(){
+    private fun alreadyLogin() {
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
         val intent = Intent(this, IntroduceActivity::class.java)
         intent.putExtra("name", MySharedPreferences.getUserName(this))
         intent.putExtra("speciality", MySharedPreferences.getUserSpec(this))
         startActivity(intent)
+        finish()
     }
-
 
 
 }
