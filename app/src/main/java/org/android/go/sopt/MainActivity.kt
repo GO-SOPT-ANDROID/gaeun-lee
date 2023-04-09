@@ -1,14 +1,10 @@
 package org.android.go.sopt
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.android.go.sopt.databinding.ActivityMainBinding
@@ -29,17 +25,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    id = result.data?.getStringExtra("id") ?: ""
-                    password = result.data?.getStringExtra("password") ?: ""
-                    name = result.data?.getStringExtra("name") ?: ""
-                    speciality = result.data?.getStringExtra("speciality") ?: ""
-
-
-                }
-            }
 
         clickLogin()
         clickSignup()
@@ -72,8 +57,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickSignup() {
+
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    id = result.data?.getStringExtra("id") ?: ""
+                    password = result.data?.getStringExtra("password") ?: ""
+                    name = result.data?.getStringExtra("name") ?: ""
+                    speciality = result.data?.getStringExtra("speciality") ?: ""
+
+
+                }
+            }
         binding.btnSignup.setOnClickListener {
-            val intent = Intent(this, SignupActivity::class.java)
+            val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
     }
