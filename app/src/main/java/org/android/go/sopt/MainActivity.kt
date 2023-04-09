@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.android.go.sopt.databinding.ActivityMainBinding
@@ -25,9 +28,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if (MySharedPreferences.getUserId(this).isNullOrBlank()
+            || MySharedPreferences.getUserPass(this).isNullOrBlank()
+        ) {
+            clickLogin()
+            clickSignup()
+        }
+        else{
+            alreadyLogin()
+        }
 
-        clickLogin()
-        clickSignup()
+
+
 
 
     }
@@ -47,6 +59,11 @@ class MainActivity : AppCompatActivity() {
 
                 val intent = Intent(this, IntroduceActivity::class.java)
 
+                MySharedPreferences.setUserId(this,id)
+                MySharedPreferences.setUserPass(this,password)
+                MySharedPreferences.setUserName(this,name)
+                MySharedPreferences.setUserSpec(this,speciality)
+
                 intent.putExtra("name", name)
                 intent.putExtra("speciality", speciality)
                 startActivity(intent)
@@ -57,7 +74,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clickSignup() {
-
         resultLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
@@ -74,6 +90,14 @@ class MainActivity : AppCompatActivity() {
             resultLauncher.launch(intent)
         }
     }
+
+    private fun alreadyLogin(){
+        val intent = Intent(this, IntroduceActivity::class.java)
+        intent.putExtra("name", MySharedPreferences.getUserName(this))
+        intent.putExtra("speciality", MySharedPreferences.getUserSpec(this))
+        startActivity(intent)
+    }
+
 
 
 }
