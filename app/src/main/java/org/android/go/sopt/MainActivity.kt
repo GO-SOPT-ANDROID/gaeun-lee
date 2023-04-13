@@ -1,8 +1,8 @@
 package org.android.go.sopt
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.android.go.sopt.databinding.ActivityMainBinding
+import org.android.go.sopt.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -29,14 +30,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (MySharedPreferences.getUserId(this).isNullOrBlank()
-            || MySharedPreferences.getUserPass(this).isNullOrBlank()
-        ) {
-            clickLogin()
-            clickSignup()
-        } else {
-            alreadyLogin()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_main)
+        if(currentFragment==null){
+            supportFragmentManager.beginTransaction().add(R.id.fcv_main,HomeFragment()).commit()
         }
+
+
+
+
+
+//        if (MySharedPreferences.getUserId(this).isNullOrBlank()
+//            || MySharedPreferences.getUserPass(this).isNullOrBlank()
+//        ) {
+//            clickLogin()
+//        }
+//        clickSignup()
 
 
     }
@@ -47,57 +55,45 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun clickLogin() {
-        binding.btnLogin.setOnClickListener {
+//    private fun clickLogin() {
+//        binding.btnLogin.setOnClickListener {
+//
+//
+//            if (id == binding.etId.text.toString() && password == binding.etPassword.text.toString()) {
+//
+//                MySharedPreferences.setUserId(this, binding.etId.text.toString())
+//                MySharedPreferences.setUserPass(this, binding.etPassword.text.toString())
+//
+//                val intent = Intent(this, IntroduceActivity::class.java)
+//
+//                intent.putExtra("name", name)
+//                intent.putExtra("speciality", speciality)
+//                startActivity(intent)
+//
+//            }
+//
+//        }
 
 
-            if (id == binding.etId.text.toString() && password == binding.etPassword.text.toString()) {
+//    }
 
-
-                val intent = Intent(this, IntroduceActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
-
-                MySharedPreferences.setUserId(this, id)
-                MySharedPreferences.setUserPass(this, password)
-                MySharedPreferences.setUserName(this, name)
-                MySharedPreferences.setUserSpec(this, speciality)
-
-                intent.putExtra("name", name)
-                intent.putExtra("speciality", speciality)
-                startActivity(intent)
-                finish()
-
-            }
-
-        }
-    }
-
-    private fun clickSignup() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    id = result.data?.getStringExtra("id") ?: ""
-                    password = result.data?.getStringExtra("password") ?: ""
-                    name = result.data?.getStringExtra("name") ?: ""
-                    speciality = result.data?.getStringExtra("speciality") ?: ""
-
-
-                }
-            }
-        binding.btnSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            resultLauncher.launch(intent)
-        }
-    }
-
-    private fun alreadyLogin() {
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
-        val intent = Intent(this, IntroduceActivity::class.java)
-        intent.putExtra("name", MySharedPreferences.getUserName(this))
-        intent.putExtra("speciality", MySharedPreferences.getUserSpec(this))
-        startActivity(intent)
-        finish()
-    }
-
+//    private fun clickSignup() {
+//
+//        resultLauncher =
+//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//                if (result.resultCode == Activity.RESULT_OK) {
+//                    id = result.data?.getStringExtra("id") ?: ""
+//                    password = result.data?.getStringExtra("password") ?: ""
+//                    name = result.data?.getStringExtra("name") ?: ""
+//                    speciality = result.data?.getStringExtra("speciality") ?: ""
+//
+//
+//                }
+//            }
+//        binding.btnSignup.setOnClickListener {
+//            val intent = Intent(this, SignupActivity::class.java)
+//            resultLauncher.launch(intent)
+//        }
+//    }
 
 }
