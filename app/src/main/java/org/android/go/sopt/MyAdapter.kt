@@ -3,17 +3,29 @@ package org.android.go.sopt
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import org.android.go.sopt.databinding.ItemMusicBinding
 
-class MyAdapter(context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+class MyAdapter(context: Context) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
-    private val itemList:List<Music> = listOf(Music("아이유","밤편지"),Music("고기","먹고싶다"))
+
+    private val itemList: List<Music> = listOf(
+        Music("Kitsch", "IVE(아이브)"),
+        Music("I AM", "IVE(아이브)"),
+        Music("꾳", "지수(JISOO)"),
+        Music("Ditto", "NewJeans"),
+        Music("Hype boy", "NewJeans"),
+        Music("OMG", "NewJeans"),
+        Music("Love Me Like This", "NMIXX"),
+        Music("Teddy Bear", "STAYC(스테이씨)"),
+        Music("Like Crazy", "지민"),
+        Music("사건의 지평선", "윤하(YOUNHA)"),
+        Music("I Don't Think That I Like Her", "Charlie Puth")
+    )
     private val inflater by lazy { LayoutInflater.from(context) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding: ItemMusicBinding = ItemMusicBinding.inflate(inflater,parent,false)
+        val binding: ItemMusicBinding = ItemMusicBinding.inflate(inflater, parent, false)
         return MyViewHolder(binding)
     }
 
@@ -25,10 +37,11 @@ class MyAdapter(context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>(
         return itemList.size
     }
 
-    class MyViewHolder(private val binding: ItemMusicBinding):RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: ItemMusicBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: Music) {
-            binding.tvMusicSinger.text = item.name
-            binding.tvMusicTitle.text = item.author
+            binding.tvMusicSinger.text = item.music
+            binding.tvMusicTitle.text = item.singer
         }
     }
 
@@ -36,10 +49,8 @@ class MyAdapter(context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>(
 
 
 data class Music(
-    // 밑에 이상한 녀석이 있죠? 이는 안드로이드의 Meta Annotation입니다.
-    //@DrawableRes val image: Int, // 서버에서 이미지 url이 내려오는 경우 String으로 받아야합니다. (Json 내부에는 URL 타입은 들어갈 수 없음)
-    val name: String,
-    val author: String
+    val music: String,
+    val singer: String
 )
 
 
