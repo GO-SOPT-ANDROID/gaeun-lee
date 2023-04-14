@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import org.android.go.sopt.BottomAdapter
 import org.android.go.sopt.MyAdapter
+import org.android.go.sopt.TopAdapter
 import org.android.go.sopt.databinding.FragmentHomeBinding
 
 class HomeFragment: Fragment() {
@@ -26,9 +29,16 @@ class HomeFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 대부분의 로직은 여기에 구현합니다.
+        // 대부분의 로직은 여기에 구현
         binding.rv.adapter = MyAdapter(requireContext()) // requireContext : null이 아닌 context 반환
         binding.rv.layoutManager= LinearLayoutManager(context)
+
+
+
+        val concatAdapter = ConcatAdapter(TopAdapter(requireContext()), MyAdapter(requireContext()), BottomAdapter(requireContext()))
+
+        binding.rv.adapter = concatAdapter
+        binding.rv.layoutManager = LinearLayoutManager(context)
     }
 
     override fun onDestroyView() {
