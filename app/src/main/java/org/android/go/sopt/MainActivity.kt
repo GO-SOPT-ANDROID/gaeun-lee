@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import org.android.go.sopt.databinding.ActivityMainBinding
 import org.android.go.sopt.home.GalleryFragment
 import org.android.go.sopt.home.HomeFragment
@@ -53,6 +54,16 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+
+        }
+
+        binding.bnvMain.setOnItemReselectedListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_main)
+
+            if (currentFragment is HomeFragment) {
+                val scrollView = currentFragment.view?.findViewById<RecyclerView>(R.id.rv)
+                scrollView?.scrollToPosition(0)
+            }
 
         }
     }
