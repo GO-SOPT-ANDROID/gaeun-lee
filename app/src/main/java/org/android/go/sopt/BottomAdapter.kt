@@ -21,9 +21,7 @@ class BottomAdapter(context: Context) : RecyclerView.Adapter<BottomAdapter.Botto
         holder.onBind(itemList[position])
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount() = itemList.size
 
     class BottomViewHolder(private val binding: ItemBottomBinding) :
         RecyclerView.ViewHolder(binding.root) {

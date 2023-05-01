@@ -21,9 +21,7 @@ class TopAdapter(context: Context) : RecyclerView.Adapter<TopAdapter.TopViewHold
         holder.onBind(itemList[position])
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount() = itemList.size
 
     class TopViewHolder(private val binding: ItemTopBinding) :
         RecyclerView.ViewHolder(binding.root) {

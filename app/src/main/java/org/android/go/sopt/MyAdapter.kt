@@ -33,9 +33,8 @@ class MyAdapter(context: Context) : RecyclerView.Adapter<MyAdapter.MyViewHolder>
         holder.onBind(itemList[position])
     }
 
-    override fun getItemCount(): Int {
-        return itemList.size
-    }
+    override fun getItemCount() = itemList.size
+
 
     class MyViewHolder(private val binding: ItemMusicBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -49,14 +48,8 @@ class MyAdapter(context: Context) : RecyclerView.Adapter<MyAdapter.MyViewHolder>
 
 
 data class Music(
-    val music: String,
-    val singer: String
+    val music: String, val singer: String
 )
-
-
-
-
-
 
 
 

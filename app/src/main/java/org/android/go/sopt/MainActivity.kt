@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 else -> {
-                    return@setOnItemSelectedListener false
+                    false
                 }
 
             }
