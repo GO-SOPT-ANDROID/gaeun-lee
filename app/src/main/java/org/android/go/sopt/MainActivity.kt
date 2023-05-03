@@ -33,7 +33,13 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().add(R.id.fcv_main, HomeFragment()).commit()
         }
 
+
         binding.bnvMain.setOnItemSelectedListener { item ->
+            // 선택된 탭의 itemId와 현재 보여지고 있는 FragmentContainerView의 itemId가 같은 경우
+            // 즉 같은 탭을 다시 선택한 경우에 scrollTo 메소드를 호출
+            if (binding.bnvMain.selectedItemId == item.itemId){
+                binding.fcvMain.scrollTo(0,0)
+            }
 
             when (item.itemId) {
                 R.id.menu_home -> {
@@ -57,15 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.bnvMain.setOnItemReselectedListener {
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_main)
-
-            if (currentFragment is HomeFragment) {
-                val scrollView = currentFragment.view?.findViewById<RecyclerView>(R.id.rv)
-                scrollView?.scrollToPosition(0)
-            }
-
-        }
     }
 
     private fun changeFragment(fragment: Fragment) {
