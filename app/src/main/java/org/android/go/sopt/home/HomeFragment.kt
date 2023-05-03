@@ -30,19 +30,30 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rv.adapter = MyAdapter(requireContext())
-        binding.rv.layoutManager= LinearLayoutManager(context)
-
-
-
-        val concatAdapter = ConcatAdapter(TopAdapter(requireContext()), MyAdapter(requireContext()), BottomAdapter(requireContext()))
-
-        binding.rv.adapter = concatAdapter
-        binding.rv.layoutManager = LinearLayoutManager(context)
+        initAdapter()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+    private fun initAdapter(){
+
+        val topAdapter = TopAdapter(requireContext())
+        val myAdapter = MyAdapter(requireContext())
+        val bottomAdapter = BottomAdapter(requireContext())
+
+        val concatAdapter = ConcatAdapter(topAdapter,myAdapter,bottomAdapter)
+
+        with(binding.rv){
+            adapter=concatAdapter
+            layoutManager=LinearLayoutManager(context)
+        }
+
+
+    }
+
+
+
 }
