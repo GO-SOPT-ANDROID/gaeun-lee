@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.android.go.sopt.data.Music
 import org.android.go.sopt.databinding.ItemMusicBinding
 
 class MyAdapter(context: Context) : RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
@@ -46,10 +47,6 @@ class MyAdapter(context: Context) : RecyclerView.Adapter<MyAdapter.MyViewHolder>
 
 }
 
-
-data class Music(
-    val music: String, val singer: String
-)
 
 
 

@@ -5,11 +5,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.android.go.sopt.data.BottomSponsor
 import org.android.go.sopt.databinding.ItemBottomBinding
 
 class BottomAdapter(context: Context) : RecyclerView.Adapter<BottomAdapter.BottomViewHolder>() {
 
-    private val itemList: List<Desc> = listOf(Desc("주식회사 멜론"), Desc("후원사 솝트"))
+    private val itemList: List<BottomSponsor> = listOf(BottomSponsor("주식회사 멜론"), BottomSponsor("후원사 솝트"))
     private val inflater by lazy { LayoutInflater.from(context) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomViewHolder {
@@ -25,16 +26,12 @@ class BottomAdapter(context: Context) : RecyclerView.Adapter<BottomAdapter.Botto
 
     class BottomViewHolder(private val binding: ItemBottomBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(item: Desc) {
-            binding.tvMusicEnd.text = item.desc
+        fun onBind(item: BottomSponsor) {
+            binding.tvMusicEnd.text = item.sponsor
         }
     }
 
 }
 
 
-data class Desc(
 
-    val desc: String,
-
-    )

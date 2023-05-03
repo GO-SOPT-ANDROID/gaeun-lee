@@ -4,12 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import org.android.go.sopt.data.TopRvTitle
 import org.android.go.sopt.databinding.ItemMusicBinding
 import org.android.go.sopt.databinding.ItemTopBinding
 
 class TopAdapter(context: Context) : RecyclerView.Adapter<TopAdapter.TopViewHolder>() {
 
-    private val itemList: List<Title> = listOf(Title("~ 노래리스트 ~"))
+    private val itemList: List<TopRvTitle> = listOf(TopRvTitle("~ 노래리스트 ~"))
     private val inflater by lazy { LayoutInflater.from(context) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopViewHolder {
@@ -25,7 +26,7 @@ class TopAdapter(context: Context) : RecyclerView.Adapter<TopAdapter.TopViewHold
 
     class TopViewHolder(private val binding: ItemTopBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(item: Title) {
+        fun onBind(item: TopRvTitle) {
             binding.tvTitle.text = item.title
         }
     }
@@ -33,7 +34,3 @@ class TopAdapter(context: Context) : RecyclerView.Adapter<TopAdapter.TopViewHold
 }
 
 
-data class Title(
-    val title: String,
-
-    )
