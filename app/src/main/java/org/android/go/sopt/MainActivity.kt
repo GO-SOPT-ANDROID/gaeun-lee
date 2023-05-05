@@ -1,22 +1,12 @@
 package org.android.go.sopt
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import org.android.go.sopt.databinding.ActivityMainBinding
-import org.android.go.sopt.home.GalleryFragment
-import org.android.go.sopt.home.HomeFragment
-import org.android.go.sopt.home.SearchFragment
+import org.android.go.sopt.present.GalleryFragment
+import org.android.go.sopt.present.HomeFragment
+import org.android.go.sopt.present.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
