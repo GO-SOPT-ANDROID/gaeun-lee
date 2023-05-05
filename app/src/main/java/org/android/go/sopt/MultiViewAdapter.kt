@@ -1,12 +1,18 @@
 package org.android.go.sopt
 
+import android.R
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
+import androidx.annotation.NonNull
+import androidx.annotation.Nullable
+import androidx.recyclerview.selection.ItemDetailsLookup
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import org.android.go.sopt.data.*
 import org.android.go.sopt.databinding.ItemBottomBinding
 import org.android.go.sopt.databinding.ItemMusicBinding
@@ -14,12 +20,18 @@ import org.android.go.sopt.databinding.ItemTopBinding
 
 
 class MultiViewAdapter(context: Context) :
-    ListAdapter<MultiData, RecyclerView.ViewHolder>(diffUtil) {
+    ListAdapter<MultiData, ViewHolder>(diffUtil) {
+
+    init {
+        setHasStableIds(true)
+    }
 
 
     private val inflater by lazy { LayoutInflater.from(context) }
+    private lateinit var selectionTracker: SelectionTracker<Long>
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             MULTI_TYPE1 -> {
                 val binding: ItemTopBinding = ItemTopBinding.inflate(inflater, parent, false)
@@ -41,6 +53,10 @@ class MultiViewAdapter(context: Context) :
 
         }
     }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
 
     override fun getItemViewType(position: Int): Int {
         return when (currentList[position].itemType) {
@@ -55,14 +71,20 @@ class MultiViewAdapter(context: Context) :
     }
 
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    fun setSelectionTracker(selectionTracker: SelectionTracker<Long>) {
+
+        this.selectionTracker = selectionTracker
+    }
+
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             MULTI_TYPE1 -> {
                 (holder as TopRvTitleViewHolder).onBind(currentList[position])
                 holder.setIsRecyclable(false)
             }
             MULTI_TYPE2 -> {
-                (holder as MusicListViewHolder).onBind(currentList[position])
+                (holder as MusicListViewHolder).onBind(currentList[position], position)
                 holder.setIsRecyclable(false)
             }
             MULTI_TYPE3 -> {
@@ -74,29 +96,60 @@ class MultiViewAdapter(context: Context) :
     }
 
     class TopRvTitleViewHolder(private val binding: ItemTopBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        ViewHolder(binding.root) {
         fun onBind(item: MultiData) {
             val dataObject = item.dataObject as DataObject.TopRvTitle
             binding.tvTitle.text = dataObject.title
         }
     }
 
-    class MusicListViewHolder(private val binding: ItemMusicBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun onBind(item: MultiData) {
+    inner class MusicListViewHolder(private val binding: ItemMusicBinding) :
+        ViewHolder(binding.root) {
+
+        fun onBind(item: MultiData, itemPosition: Int) {
+
             val dataObject = item.dataObject as DataObject.Music
             binding.tvMusicTitle.text = dataObject.music
             binding.tvMusicSinger.text = dataObject.singer
 
+            if (selectionTracker != null && selectionTracker.isSelected(absoluteAdapterPosition.toLong())) {
+                binding.chkSelect.setImageResource(R.drawable.ic_media_play)
+            } else {
+                binding.chkSelect.setImageResource(R.drawable.ic_menu_delete)
+            }
+
+
+
+
+        }
+
+        fun getItemDetails(viewHolder: RecyclerView.ViewHolder?): ItemDetailsLookup.ItemDetails<Long> {
+            return object : ItemDetailsLookup.ItemDetails<Long>() {
+                override fun getSelectionKey(): Long? {
+                    return itemId
+                }
+
+                override fun getPosition(): Int {
+                    if (viewHolder == null) {
+                        return RecyclerView.NO_POSITION
+                    }
+                    return viewHolder.bindingAdapterPosition
+                }
+
+                override fun inSelectionHotspot(e: MotionEvent): Boolean {
+                    return true
+                }
+            }
         }
     }
 
     class BottomSponsorViewHolder(private val binding: ItemBottomBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        ViewHolder(binding.root) {
         fun onBind(item: MultiData) {
             val dataObject = item.dataObject as DataObject.BottomSponsor
             binding.tvMusicEnd.text = dataObject.sponsor
         }
+
     }
 
 
@@ -110,7 +163,19 @@ class MultiViewAdapter(context: Context) :
                 return oldItem == newItem
             }
 
+        }
+    }
 
+    class MyItemDetailsLookup(private val recyclerView: RecyclerView) : ItemDetailsLookup<Long>() {
+        @Nullable
+        override fun getItemDetails(@NonNull motionEvent: MotionEvent): ItemDetails<Long>? {
+            val view = recyclerView.findChildViewUnder(motionEvent.x, motionEvent.y)
+            if (view != null && recyclerView.getChildViewHolder(view) is MultiViewAdapter.MusicListViewHolder) {
+                val viewHolder =
+                    recyclerView.getChildViewHolder(view) as MultiViewAdapter.MusicListViewHolder
+                return viewHolder.getItemDetails(viewHolder)
+            }
+            return null
         }
     }
 

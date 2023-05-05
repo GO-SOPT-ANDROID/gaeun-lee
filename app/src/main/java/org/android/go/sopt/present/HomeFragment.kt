@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.android.go.sopt.MultiViewAdapter
 import org.android.go.sopt.data.DataObject
@@ -60,11 +64,20 @@ class HomeFragment : Fragment() {
         val multiAdapter = MultiViewAdapter(requireContext())
         multiAdapter.submitList(itemList)
 
-
         with(binding.rv) {
             adapter = multiAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
+        val itemSelectionTracker = SelectionTracker.Builder<Long>(
+            "todo-content",
+            binding.rv,
+            StableIdKeyProvider(binding.rv),
+            MultiViewAdapter.MyItemDetailsLookup(binding.rv),
+            StorageStrategy.createLongStorage()
+        ).withSelectionPredicate(SelectionPredicates.createSelectAnything()).build()
+        multiAdapter.setSelectionTracker(itemSelectionTracker)
+
 
     }
 
