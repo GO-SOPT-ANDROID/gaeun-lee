@@ -1,26 +1,15 @@
 package org.android.go.sopt
 
-import android.app.Activity
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
-import android.view.inputmethod.InputMethodManager
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import org.android.go.sopt.databinding.ActivityMainBinding
+import org.android.go.sopt.present.GalleryFragment
+import org.android.go.sopt.present.HomeFragment
+import org.android.go.sopt.present.SearchFragment
 
 class MainActivity : AppCompatActivity() {
-    lateinit var binding: ActivityMainBinding
-    private lateinit var id: String
-    private lateinit var password: String
-    private lateinit var name: String
-    private lateinit var speciality: String
-
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,74 +18,49 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (MySharedPreferences.getUserId(this).isNullOrBlank()
-            || MySharedPreferences.getUserPass(this).isNullOrBlank()
-        ) {
-            clickLogin()
-            clickSignup()
-        } else {
-            alreadyLogin()
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_main)
+        if (currentFragment == null) {
+            supportFragmentManager.beginTransaction().add(R.id.fcv_main, HomeFragment()).commit()
         }
 
 
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        this.currentFocus?.let { hideKeyboard(it) }
-        return super.dispatchTouchEvent(ev)
-    }
-
-
-    private fun clickLogin() {
-        binding.btnLogin.setOnClickListener {
-
-
-            if (id == binding.etId.text.toString() && password == binding.etPassword.text.toString()) {
-
-
-                val intent = Intent(this, IntroduceActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
-
-                MySharedPreferences.setUserId(this, id)
-                MySharedPreferences.setUserPass(this, password)
-                MySharedPreferences.setUserName(this, name)
-                MySharedPreferences.setUserSpec(this, speciality)
-
-                intent.putExtra("name", name)
-                intent.putExtra("speciality", speciality)
-                startActivity(intent)
-                finish()
-
+        binding.bnvMain.setOnItemSelectedListener { item ->
+            // 선택된 탭의 itemId와 현재 보여지고 있는 FragmentContainerView의 itemId가 같은 경우
+            // 즉 같은 탭을 다시 선택한 경우에 scrollTo 메소드를 호출
+            if (binding.bnvMain.selectedItemId == item.itemId){
+                binding.fcvMain.scrollTo(0,0)
             }
 
-        }
-    }
-
-    private fun clickSignup() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    id = result.data?.getStringExtra("id") ?: ""
-                    password = result.data?.getStringExtra("password") ?: ""
-                    name = result.data?.getStringExtra("name") ?: ""
-                    speciality = result.data?.getStringExtra("speciality") ?: ""
-
-
+            when (item.itemId) {
+                R.id.menu_home -> {
+                    changeFragment(HomeFragment())
+                    return@setOnItemSelectedListener true
                 }
+                R.id.menu_search -> {
+                    changeFragment(SearchFragment())
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_gallery -> {
+                    changeFragment(GalleryFragment())
+                    return@setOnItemSelectedListener true
+                }
+                else -> {
+                    false
+                }
+
             }
-        binding.btnSignup.setOnClickListener {
-            val intent = Intent(this, SignUpActivity::class.java)
-            resultLauncher.launch(intent)
+
+
         }
+
     }
 
-    private fun alreadyLogin() {
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
-        val intent = Intent(this, IntroduceActivity::class.java)
-        intent.putExtra("name", MySharedPreferences.getUserName(this))
-        intent.putExtra("speciality", MySharedPreferences.getUserSpec(this))
-        startActivity(intent)
-        finish()
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fcv_main, fragment)
+            .commit()
+
     }
 
 
