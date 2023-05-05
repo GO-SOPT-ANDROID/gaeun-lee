@@ -2,22 +2,35 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/selected_color"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/chk_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_music"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/iv_music"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <ImageView
+            android:id="@+id/iv_music"
             android:layout_width="0dp"
             android:layout_height="60dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/ic_launcher_background"
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintDimensionRatio="1:1"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/chk_select"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -33,9 +46,9 @@
 
         <TextView
             android:id="@+id/tv_music_singer"
-            android:textSize="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="@id/tv_music_title"
             app:layout_constraintStart_toStartOf="@id/tv_music_title"
             app:layout_constraintTop_toBottomOf="@id/tv_music_title"
