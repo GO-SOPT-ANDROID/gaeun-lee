@@ -5,15 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import org.android.go.sopt.BottomAdapter
-import org.android.go.sopt.MyAdapter
-import org.android.go.sopt.TopAdapter
+import org.android.go.sopt.MultiViewAdapter
+import org.android.go.sopt.data.DataObject
+import org.android.go.sopt.data.MultiData
 import org.android.go.sopt.databinding.FragmentHomeBinding
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding
         get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
@@ -38,22 +36,42 @@ class HomeFragment: Fragment() {
         _binding = null
     }
 
-    private fun initAdapter(){
+    private fun initAdapter() {
 
-        val topAdapter = TopAdapter(requireContext())
-        val myAdapter = MyAdapter(requireContext())
-        val bottomAdapter = BottomAdapter(requireContext())
 
-        val concatAdapter = ConcatAdapter(topAdapter,myAdapter,bottomAdapter)
 
-        with(binding.rv){
-            adapter=concatAdapter
-            layoutManager=LinearLayoutManager(context)
+        val itemList =
+            mutableListOf<MultiData>(
+                MultiData(0,DataObject.TopRvTitle("노래 리스트")),
+                MultiData(1, DataObject.Music("Kitsch", "IVE(아이브)")),
+                MultiData(1, DataObject.Music("I AM", "IVE(아이브)")),
+                MultiData(1, DataObject.Music("UNFORGIVEN", "LE SSEFAFIM(르세라핌)")),
+                MultiData(1, DataObject.Music("꾳", "지수(JISOO)")),
+                MultiData(1, DataObject.Music("손오공", "세븐틴(SEVENTEEN)")),
+                MultiData(1, DataObject.Music("파이팅 해야지(Feat.이영지)", "부석순(SEVENTEEN)")),
+                MultiData(1, DataObject.Music("Ditto", "NewJeans")),
+                MultiData(1, DataObject.Music("Hype boy", "NewJeans")),
+                MultiData(1, DataObject.Music("OMG", "NewJeans")),
+                MultiData(1, DataObject.Music("사람 Pt.2(feat. 아이유)", "Agust D")),
+                MultiData(1, DataObject.Music("FRIEND THE END", "볼빨간사춘기")),
+                MultiData(1, DataObject.Music("물론", "허각")),
+                MultiData(2,DataObject.BottomSponsor("주식회사 멜론")),
+                MultiData(2,DataObject.BottomSponsor("후원사 SOPT"))
+            )
+        val multiAdapter = MultiViewAdapter(requireContext())
+        multiAdapter.setItemList(itemList)
+        multiAdapter.notifyDataSetChanged()
+
+
+
+
+        with(binding.rv) {
+            adapter = multiAdapter
+            layoutManager = LinearLayoutManager(context)
         }
 
 
     }
-
 
 
 }
