@@ -53,6 +53,7 @@ class MultiViewAdapter(context: Context) :
 
         }
     }
+
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
@@ -117,8 +118,6 @@ class MultiViewAdapter(context: Context) :
             } else {
                 binding.chkSelect.setImageResource(R.drawable.ic_menu_delete)
             }
-
-
 
 
         }
