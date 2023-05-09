@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
+import org.android.go.sopt.R
+import org.android.go.sopt.ViewPagerAdapter
 import org.android.go.sopt.databinding.FragmentGalleryBinding
 
-class GalleryFragment: Fragment() {
+class GalleryFragment : Fragment() {
     private var _binding: FragmentGalleryBinding? = null
     private val binding: FragmentGalleryBinding
         get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
@@ -24,11 +27,18 @@ class GalleryFragment: Fragment() {
     // 뷰가 만들어졌다.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // 대부분의 로직은 여기에 구현합니다.
+        binding.pagerHome.adapter =
+            ViewPagerAdapter(listOf(R.drawable.ic_home, R.drawable.ic_image, R.drawable.ic_music))
+
+        TabLayoutMediator(binding.tabLayout, binding.pagerHome) { tab, position ->
+            tab.text = "Fragment ${position + 1}"
+        }.attach()
+
+
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

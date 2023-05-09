@@ -1,6 +1,6 @@
 package org.android.go.sopt
 
-import android.R
+import org.android.go.sopt.R
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -114,9 +114,9 @@ class MultiViewAdapter(context: Context) :
             binding.tvMusicSinger.text = dataObject.singer
 
             if (selectionTracker != null && selectionTracker.isSelected(absoluteAdapterPosition.toLong())) {
-                binding.chkSelect.setImageResource(R.drawable.ic_media_play)
+                binding.chkSelect.setImageResource(R.drawable.ic_home)
             } else {
-                binding.chkSelect.setImageResource(R.drawable.ic_menu_delete)
+                binding.chkSelect.setImageResource(R.drawable.ic_image)
             }
 
 
