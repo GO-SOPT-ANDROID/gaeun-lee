@@ -36,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (MySharedPreferences.getUserId(this).isNullOrBlank()
-            || MySharedPreferences.getUserPass(this).isNullOrBlank()
         ) {
             clickLogin()
             clickSignup()
@@ -73,9 +72,9 @@ class LoginActivity : AppCompatActivity() {
                     response: Response<ResponseLogInDto>
                 ) {
                     if (response.isSuccessful) {
-                        id = response.body()?.data?.id?:""
-                        name = response.body()?.data?.name?:""
-                        speciality = response.body()?.data?.skill?:""
+                        id = response.body()?.data?.id ?: ""
+                        name = response.body()?.data?.name ?: ""
+                        speciality = response.body()?.data?.skill ?: ""
 
                         val intent = Intent(this@LoginActivity, IntroduceActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
@@ -97,8 +96,7 @@ class LoginActivity : AppCompatActivity() {
                             ).show()
 
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
                     }
                 }
