@@ -1,8 +1,10 @@
 package org.android.go.sopt.myPage
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import org.android.go.sopt.databinding.ActivityIntroduceBinding
 
 class IntroduceActivity : AppCompatActivity() {
@@ -21,12 +23,18 @@ class IntroduceActivity : AppCompatActivity() {
         binding.specialty.text = "특기 : $speciality"
 
         binding.btnLogout.setOnClickListener {
-            MySharedPreferences.clearUser(this)
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Go SOPT").setMessage("로그아웃 하시겠나요?")
+                .setPositiveButton("네") { _, _ ->
+                    MySharedPreferences.clearUser(this)
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
 
+                }.setNegativeButton("아니요", null).setCancelable(true)
+            builder.show()
+
+        }
 
     }
 }
