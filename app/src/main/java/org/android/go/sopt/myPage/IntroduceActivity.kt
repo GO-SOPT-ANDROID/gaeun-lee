@@ -22,6 +22,14 @@ class IntroduceActivity : AppCompatActivity() {
         binding.name.text = "이름 : $name"
         binding.specialty.text = "특기 : $speciality"
 
+        clickLogOut()
+
+
+
+    }
+
+
+    private fun clickLogOut(){
         binding.btnLogout.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Go SOPT").setMessage("로그아웃 하시겠나요?")
@@ -35,6 +43,5 @@ class IntroduceActivity : AppCompatActivity() {
             builder.show()
 
         }
-
     }
 }
