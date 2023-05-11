@@ -6,9 +6,16 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import org.android.go.sopt.databinding.ActivityLoginBinding
+import org.android.go.sopt.remote.ServicePool
+import org.android.go.sopt.remote.model.RequestLogInDto
+import org.android.go.sopt.remote.model.ResponseLogInDto
+import org.android.go.sopt.remote.service.LogInService
+import retrofit2.Call
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
@@ -16,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password: String
     private lateinit var name: String
     private lateinit var speciality: String
+
+    private val logInService = ServicePool.LogInService
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
@@ -51,24 +60,54 @@ class LoginActivity : AppCompatActivity() {
     private fun clickLogin() {
         binding.btnLogin.setOnClickListener {
 
+            logInService.login(
+                with(binding) {
+                    RequestLogInDto(
+                        etId.text.toString(),
+                        etPassword.text.toString()
+                    )
+                }
+            ).enqueue(object : retrofit2.Callback<ResponseLogInDto> {
+                override fun onResponse(
+                    call: Call<ResponseLogInDto>,
+                    response: Response<ResponseLogInDto>
+                ) {
+                    if (response.isSuccessful) {
+                        id = response.body()?.data?.id?:""
+                        name = response.body()?.data?.name?:""
+                        speciality = response.body()?.data?.skill?:""
 
-            if (id == binding.etId.text.toString() && password == binding.etPassword.text.toString()) {
+                        val intent = Intent(this@LoginActivity, IntroduceActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
 
+                        MySharedPreferences.setUserId(this@LoginActivity, id)
+                        MySharedPreferences.setUserName(this@LoginActivity, name)
+                        MySharedPreferences.setUserSpec(this@LoginActivity, speciality)
 
-                val intent = Intent(this, IntroduceActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
+                        intent.putExtra("name", name)
+                        intent.putExtra("speciality", speciality)
+                        startActivity(intent)
+                        finish()
 
-                MySharedPreferences.setUserId(this, id)
-                MySharedPreferences.setUserPass(this, password)
-                MySharedPreferences.setUserName(this, name)
-                MySharedPreferences.setUserSpec(this, speciality)
+                        response.body()?.message?.let {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                response.body()?.message ?: "로그인 성공",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                intent.putExtra("name", name)
-                intent.putExtra("speciality", speciality)
-                startActivity(intent)
-                finish()
+                        }
+                    }
+                    else{
+                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
-            }
+                override fun onFailure(call: Call<ResponseLogInDto>, t: Throwable) {
+                    Toast.makeText(this@LoginActivity, "서버 에러 바랫ㅇ", Toast.LENGTH_SHORT).show()
+                }
+            })
+
 
         }
     }
