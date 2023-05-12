@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import org.android.go.sopt.BuildConfig.AUTH_BASE_URL
+import org.android.go.sopt.remote.service.ListUsersService
 import org.android.go.sopt.remote.service.LogInService
 import org.android.go.sopt.remote.service.SignUpService
 import retrofit2.Retrofit
@@ -21,5 +22,5 @@ object ApiFactory {
 
 object ServicePool { // 서비스가 모여있는곳
     val signUpService = ApiFactory.create<SignUpService>()
-    val LogInService = ApiFactory.create<LogInService>()
+    val logInService = ApiFactory.create<LogInService>()
 }

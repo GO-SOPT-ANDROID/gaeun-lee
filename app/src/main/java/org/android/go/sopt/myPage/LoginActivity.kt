@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var name: String
     private lateinit var speciality: String
 
-    private val logInService = ServicePool.LogInService
+    private val logInService = ServicePool.logInService
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
