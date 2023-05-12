@@ -42,6 +42,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
+        canClickButton()
         binding.btnSignup.setOnClickListener {
             if (binding.etId.text.length in 6..10 && binding.etPassword.text.length in 8..12) {
 
@@ -92,6 +93,35 @@ class SignUpActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun canClickButton() {
+
+        with(binding) {
+            btnSignup.isEnabled = false
+
+            val textWatcher: TextWatcher = object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (etId.text.length in 6..10 && etPassword.text.length in 8..12) {
+                        btnSignup.isEnabled = true
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            }
+
+            etId.addTextChangedListener(textWatcher)
+            etPassword.addTextChangedListener(textWatcher)
+            etName.addTextChangedListener(textWatcher)
+            etSpeciality.addTextChangedListener(textWatcher)
+
+
+        }
+
     }
 
 
