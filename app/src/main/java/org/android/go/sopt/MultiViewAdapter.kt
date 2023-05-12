@@ -103,7 +103,7 @@ class MultiViewAdapter(context: Context) :
 
     class TopRvTitleViewHolder(private val binding: ItemTopBinding) : ViewHolder(binding.root) {
         fun onBind() {
-            binding.tvTitle.text = "유저 리스트"
+            binding.tvTitle.text = "USER LIST"
         }
     }
 
@@ -117,9 +117,9 @@ class MultiViewAdapter(context: Context) :
             Glide.with(context).load(item.avatar).into(binding.ivAvatar)
 
             if (selectionTracker != null && selectionTracker.isSelected(absoluteAdapterPosition.toLong())) {
-                binding.chkSelect.setImageResource(R.drawable.ic_home)
+                binding.ivSelect.setImageResource(R.drawable.ic_home)
             } else {
-                binding.chkSelect.setImageResource(R.drawable.ic_image)
+                binding.ivSelect.setImageResource(R.drawable.ic_image)
             }
 
 

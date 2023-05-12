@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/chk_select"
+            android:id="@+id/iv_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_music"
@@ -30,7 +30,7 @@
             android:background="@drawable/ic_launcher_background"
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintStart_toEndOf="@id/chk_select"
+            app:layout_constraintStart_toEndOf="@id/iv_select"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
