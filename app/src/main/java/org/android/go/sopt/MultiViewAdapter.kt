@@ -1,7 +1,8 @@
 package org.android.go.sopt
 
-import org.android.go.sopt.R
+import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -13,22 +14,26 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import org.android.go.sopt.data.*
 import org.android.go.sopt.databinding.ItemBottomBinding
 import org.android.go.sopt.databinding.ItemMusicBinding
 import org.android.go.sopt.databinding.ItemTopBinding
+import org.android.go.sopt.remote.model.ResponseListUsersDto
+
 
 
 class MultiViewAdapter(context: Context) :
-    ListAdapter<MultiData, ViewHolder>(diffUtil) {
+    ListAdapter<ResponseListUsersDto.Data, ViewHolder>(diffUtil) {
 
-    init {
+    init { // selectionTracker를 위한 설정
         setHasStableIds(true)
     }
 
 
     private val inflater by lazy { LayoutInflater.from(context) }
     private lateinit var selectionTracker: SelectionTracker<Long>
+    private val context = context
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -60,15 +65,17 @@ class MultiViewAdapter(context: Context) :
 
 
     override fun getItemViewType(position: Int): Int {
-        return when (currentList[position].itemType) {
+        return when (position) {
             0 -> MULTI_TYPE1
-            1 -> MULTI_TYPE2
-            2 -> MULTI_TYPE3
+            currentList.size + 1 -> MULTI_TYPE3
             else -> MULTI_TYPE2
 
         }
 
+    }
 
+    override fun getItemCount(): Int {
+        return currentList.size + 2 // UserList + Top + Bottom 이므로 +2를 해준다
     }
 
 
@@ -81,37 +88,35 @@ class MultiViewAdapter(context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (getItemViewType(position)) {
             MULTI_TYPE1 -> {
-                (holder as TopRvTitleViewHolder).onBind(currentList[position])
+                (holder as TopRvTitleViewHolder).onBind()
                 holder.setIsRecyclable(false)
             }
             MULTI_TYPE2 -> {
-                (holder as MusicListViewHolder).onBind(currentList[position], position)
+                (holder as MusicListViewHolder).onBind(currentList[position - 1])
                 holder.setIsRecyclable(false)
             }
             MULTI_TYPE3 -> {
-                (holder as BottomSponsorViewHolder).onBind(currentList[position])
+                (holder as BottomSponsorViewHolder).onBind()
                 holder.setIsRecyclable(false)
             }
         }
 
     }
 
-    class TopRvTitleViewHolder(private val binding: ItemTopBinding) :
-        ViewHolder(binding.root) {
-        fun onBind(item: MultiData) {
-            val dataObject = item.dataObject as DataObject.TopRvTitle
-            binding.tvTitle.text = dataObject.title
+    class TopRvTitleViewHolder(private val binding: ItemTopBinding) : ViewHolder(binding.root) {
+        fun onBind() {
+            binding.tvTitle.text = "노래 리스트"
         }
     }
 
     inner class MusicListViewHolder(private val binding: ItemMusicBinding) :
         ViewHolder(binding.root) {
 
-        fun onBind(item: MultiData, itemPosition: Int) {
+        fun onBind(item: ResponseListUsersDto.Data) {
 
-            val dataObject = item.dataObject as DataObject.Music
-            binding.tvMusicTitle.text = dataObject.music
-            binding.tvMusicSinger.text = dataObject.singer
+            binding.tvMusicTitle.text = item.first_name + item.last_name
+            binding.tvMusicSinger.text = item.email
+            Glide.with(context).load(item.avatar).into(binding.ivMusic)
 
             if (selectionTracker != null && selectionTracker.isSelected(absoluteAdapterPosition.toLong())) {
                 binding.chkSelect.setImageResource(R.drawable.ic_home)
@@ -144,21 +149,26 @@ class MultiViewAdapter(context: Context) :
 
     class BottomSponsorViewHolder(private val binding: ItemBottomBinding) :
         ViewHolder(binding.root) {
-        fun onBind(item: MultiData) {
-            val dataObject = item.dataObject as DataObject.BottomSponsor
-            binding.tvMusicEnd.text = dataObject.sponsor
+        fun onBind() {
+            binding.tvMusicEnd.text = "후원사 SOPT"
         }
 
     }
 
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<MultiData>() {
-            override fun areItemsTheSame(oldItem: MultiData, newItem: MultiData): Boolean {
+        val diffUtil = object : DiffUtil.ItemCallback<ResponseListUsersDto.Data>() {
+            override fun areItemsTheSame(
+                oldItem: ResponseListUsersDto.Data,
+                newItem: ResponseListUsersDto.Data
+            ): Boolean {
                 return oldItem === newItem
             }
 
-            override fun areContentsTheSame(oldItem: MultiData, newItem: MultiData): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ResponseListUsersDto.Data,
+                newItem: ResponseListUsersDto.Data
+            ): Boolean {
                 return oldItem == newItem
             }
 
