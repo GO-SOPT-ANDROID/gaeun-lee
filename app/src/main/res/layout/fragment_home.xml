@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_delete_item"
-        tools:listitem="@layout/item_music"
+        tools:listitem="@layout/item_users"
         />
 
     <Button

@@ -1,8 +1,6 @@
 package org.android.go.sopt
 
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -17,8 +15,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import org.android.go.sopt.data.*
 import org.android.go.sopt.databinding.ItemBottomBinding
-import org.android.go.sopt.databinding.ItemMusicBinding
 import org.android.go.sopt.databinding.ItemTopBinding
+import org.android.go.sopt.databinding.ItemUsersBinding
 import org.android.go.sopt.remote.model.ResponseListUsersDto
 
 
@@ -43,16 +41,16 @@ class MultiViewAdapter(context: Context) :
                 return TopRvTitleViewHolder(binding)
             }
             MULTI_TYPE2 -> {
-                val binding: ItemMusicBinding = ItemMusicBinding.inflate(inflater, parent, false)
-                return MusicListViewHolder(binding)
+                val binding: ItemUsersBinding = ItemUsersBinding.inflate(inflater, parent, false)
+                return UsersListViewHolder(binding)
             }
             MULTI_TYPE3 -> {
                 val binding: ItemBottomBinding = ItemBottomBinding.inflate(inflater, parent, false)
                 return BottomSponsorViewHolder(binding)
             }
             else -> {
-                val binding: ItemMusicBinding = ItemMusicBinding.inflate(inflater, parent, false)
-                return MusicListViewHolder(binding)
+                val binding: ItemUsersBinding = ItemUsersBinding.inflate(inflater, parent, false)
+                return UsersListViewHolder(binding)
             }
 
 
@@ -92,7 +90,7 @@ class MultiViewAdapter(context: Context) :
                 holder.setIsRecyclable(false)
             }
             MULTI_TYPE2 -> {
-                (holder as MusicListViewHolder).onBind(currentList[position - 1])
+                (holder as UsersListViewHolder).onBind(currentList[position - 1])
                 holder.setIsRecyclable(false)
             }
             MULTI_TYPE3 -> {
@@ -105,18 +103,18 @@ class MultiViewAdapter(context: Context) :
 
     class TopRvTitleViewHolder(private val binding: ItemTopBinding) : ViewHolder(binding.root) {
         fun onBind() {
-            binding.tvTitle.text = "노래 리스트"
+            binding.tvTitle.text = "유저 리스트"
         }
     }
 
-    inner class MusicListViewHolder(private val binding: ItemMusicBinding) :
+    inner class UsersListViewHolder(private val binding: ItemUsersBinding) :
         ViewHolder(binding.root) {
 
         fun onBind(item: ResponseListUsersDto.Data) {
 
-            binding.tvMusicTitle.text = item.first_name + item.last_name
-            binding.tvMusicSinger.text = item.email
-            Glide.with(context).load(item.avatar).into(binding.ivMusic)
+            binding.tvUserName.text = item.first_name + item.last_name
+            binding.tvUserEmail.text = item.email
+            Glide.with(context).load(item.avatar).into(binding.ivAvatar)
 
             if (selectionTracker != null && selectionTracker.isSelected(absoluteAdapterPosition.toLong())) {
                 binding.chkSelect.setImageResource(R.drawable.ic_home)
@@ -179,9 +177,9 @@ class MultiViewAdapter(context: Context) :
         @Nullable
         override fun getItemDetails(@NonNull motionEvent: MotionEvent): ItemDetails<Long>? {
             val view = recyclerView.findChildViewUnder(motionEvent.x, motionEvent.y)
-            if (view != null && recyclerView.getChildViewHolder(view) is MultiViewAdapter.MusicListViewHolder) {
+            if (view != null && recyclerView.getChildViewHolder(view) is MultiViewAdapter.UsersListViewHolder) {
                 val viewHolder =
-                    recyclerView.getChildViewHolder(view) as MultiViewAdapter.MusicListViewHolder
+                    recyclerView.getChildViewHolder(view) as MultiViewAdapter.UsersListViewHolder
                 return viewHolder.getItemDetails(viewHolder)
             }
             return null
