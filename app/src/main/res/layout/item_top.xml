@@ -4,36 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary">
+    android:background="@color/beige_50">
 
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_music"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanum_gothic_bold"
+        android:padding="10dp"
+        android:paddingStart="30dp"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="노래 리스트" />
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:src="@drawable/ic_music"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:text="USER LIST" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
