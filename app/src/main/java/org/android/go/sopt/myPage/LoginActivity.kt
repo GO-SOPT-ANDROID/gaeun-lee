@@ -9,11 +9,14 @@ import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import org.android.go.sopt.databinding.ActivityLoginBinding
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.remote.model.RequestLogInDto
 import org.android.go.sopt.remote.model.ResponseLogInDto
 import org.android.go.sopt.remote.service.LogInService
+import org.android.go.sopt.util.hideKeyboard
+import org.android.go.sopt.viewModel.LoginViewModel
 import retrofit2.Call
 import retrofit2.Response
 
@@ -27,6 +30,7 @@ class LoginActivity : AppCompatActivity() {
     private val logInService = ServicePool.logInService
 
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,56 +63,41 @@ class LoginActivity : AppCompatActivity() {
     private fun clickLogin() {
         binding.btnLogin.setOnClickListener {
 
-            logInService.login(
-                with(binding) {
-                    RequestLogInDto(
-                        etId.text.toString(),
-                        etPassword.text.toString()
-                    )
-                }
-            ).enqueue(object : retrofit2.Callback<ResponseLogInDto> {
-                override fun onResponse(
-                    call: Call<ResponseLogInDto>,
-                    response: Response<ResponseLogInDto>
-                ) {
-                    if (response.isSuccessful) {
-                        id = response.body()?.data?.id ?: ""
-                        name = response.body()?.data?.name ?: ""
-                        speciality = response.body()?.data?.skill ?: ""
 
-                        val intent = Intent(this@LoginActivity, IntroduceActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
+            viewModel.login(
+                binding.etId.text.toString(),
+                binding.etPassword.text.toString()
+            )
+        }
 
-                        MySharedPreferences.setUserId(this@LoginActivity, id)
-                        MySharedPreferences.setUserName(this@LoginActivity, name)
-                        MySharedPreferences.setUserSpec(this@LoginActivity, speciality)
 
-                        intent.putExtra("name", name)
-                        intent.putExtra("speciality", speciality)
-                        startActivity(intent)
-                        finish()
+        viewModel.loginResult.observe(this) { loginResult ->
+            val intent = Intent(this@LoginActivity, IntroduceActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
 
-                        response.body()?.message?.let {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                response.body()?.message ?: "로그인 성공",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                        }
-                    } else {
-                        Toast.makeText(this@LoginActivity, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    }
+            loginResult.data?.let {
+                MySharedPreferences.setUserId(this@LoginActivity, it.id)
                 }
 
-                override fun onFailure(call: Call<ResponseLogInDto>, t: Throwable) {
-                    Toast.makeText(this@LoginActivity, "서버 에러 발생", Toast.LENGTH_SHORT).show()
-                }
-            })
+
+            startActivity(intent)
+            finish()
+
+            loginResult.message?.let {
+                Toast.makeText(
+                    this@LoginActivity,
+                    loginResult.message ?: "로그인 성공",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
 
 
         }
+
+
     }
+
 
     private fun clickSignup() {
         resultLauncher =

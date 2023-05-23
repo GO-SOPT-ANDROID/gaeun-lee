@@ -12,6 +12,7 @@ import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.ResponseSignUpDto
 import org.android.go.sopt.databinding.ActivitySignupBinding
 import org.android.go.sopt.remote.ServicePool
+import org.android.go.sopt.util.hideKeyboard
 import retrofit2.Call
 import retrofit2.Response
 import android.text.TextWatcher as TextWatcher
