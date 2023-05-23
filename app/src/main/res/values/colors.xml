@@ -3,6 +3,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="peach_50">#FFF7F2F2</color>
+    <color name="peach_100">#FFEED8D8</color>
+    <color name="peach_200">#FFE8B9B9</color>
+    <color name="peach_300">#FFE19999</color>
+    <color name="peach_400">#FFD77A7A</color>
+    <color name="peach_500">#FFFEA1A1</color>
+    <color name="peach_600">#FFD57171</color>
+    <color name="peach_700">#FFB84242</color>
+
+    <color name="beige_50">#FFF8F3EA</color>
+    <color name="beige_100">#FFF1E1D2</color>
+    <color name="beige_200">#FFE9CEB9</color>
+    <color name="beige_300">#FFE1BCA0</color>
+    <color name="beige_400">#FFD8A987</color>
+    <color name="beige_500">#FFECCDB4</color>
+    <color name="beige_600">#FFCEA97F</color>
+    <color name="beige_700">#FFAF844B</color>
+
     <color name="red_50">#fde0dc</color>
     <color name="red_100">#f9bdbb</color>
     <color name="red_200">#f69988</color>
