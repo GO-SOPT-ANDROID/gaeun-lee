@@ -3,18 +3,31 @@ package org.android.go.sopt.remote
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.android.go.sopt.BuildConfig.AUTH_BASE_URL
 import org.android.go.sopt.BuildConfig.USERS_LIST_BASE_URL
+import org.android.go.sopt.remote.service.ImageService
 import org.android.go.sopt.remote.service.UsersListService
 import org.android.go.sopt.remote.service.LogInService
 import org.android.go.sopt.remote.service.SignUpService
 import retrofit2.Retrofit
 
 object ApiFactory {
+
+    private val client by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }).build()
+
+    }
+
     val retrofitAuth: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(AUTH_BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+            .client(client)
             .build()
     }
 
@@ -33,5 +46,6 @@ object ApiFactory {
 object ServicePool { // 서비스가 모여있는곳
     val signUpService = ApiFactory.createAuth<SignUpService>()
     val logInService = ApiFactory.createAuth<LogInService>()
+    val imageService = ApiFactory.createAuth<ImageService>()
     val listUsersService = ApiFactory.createUsers<UsersListService>()
 }
