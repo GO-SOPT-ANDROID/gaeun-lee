@@ -7,6 +7,7 @@ import org.android.go.sopt.BuildConfig.AUTH_BASE_URL
 import org.android.go.sopt.BuildConfig.USERS_LIST_BASE_URL
 import org.android.go.sopt.remote.service.UsersListService
 import org.android.go.sopt.remote.service.LogInService
+import org.android.go.sopt.remote.service.MyProfileService
 import org.android.go.sopt.remote.service.SignUpService
 import retrofit2.Retrofit
 
@@ -34,4 +35,5 @@ object ServicePool { // 서비스가 모여있는곳
     val signUpService = ApiFactory.createAuth<SignUpService>()
     val logInService = ApiFactory.createAuth<LogInService>()
     val listUsersService = ApiFactory.createUsers<UsersListService>()
+    val myProfileService = ApiFactory.createAuth<MyProfileService>()
 }
