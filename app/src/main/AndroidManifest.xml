@@ -22,9 +22,6 @@
             android:exported="true"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name=".present.loginPage.IntroduceActivity"
-            android:exported="false" />
-        <activity
             android:name=".present.loginPage.LoginActivity"
             android:exported="true">
             <intent-filter>

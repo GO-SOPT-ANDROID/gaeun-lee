@@ -115,7 +115,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun alreadyLogin() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
-        val intent = Intent(this, IntroduceActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("name", MySharedPreferences.getUserName(this))
         intent.putExtra("speciality", MySharedPreferences.getUserSpec(this))
         startActivity(intent)
