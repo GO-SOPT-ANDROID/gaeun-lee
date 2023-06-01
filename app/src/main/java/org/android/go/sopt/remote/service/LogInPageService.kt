@@ -6,6 +6,7 @@ import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
 import org.android.go.sopt.remote.remoteData.model.ResponseLogInDto
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -15,15 +16,15 @@ interface LogInPageService {
     @POST("sign-in")
     fun login(
         @Body request: RequestLogInDto,
-    ): Call<ResponseLogInDto>
+    ): Response<ResponseLogInDto>
 
     @POST("sign-up")
     fun signUp(
         @Body request: RequestSignUpDto,
-    ): Call<ResponseSignUpDto>
+    ): Response<ResponseSignUpDto>
 
 
     @GET("info/{userId}")
-    fun myProfile(@Path("userId") userId: String):Call<MyProfileDto>
+    fun myProfile(@Path("userId") userId: String):Response<MyProfileDto>
 
 }
