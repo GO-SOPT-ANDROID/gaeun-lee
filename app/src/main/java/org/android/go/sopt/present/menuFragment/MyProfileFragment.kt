@@ -21,7 +21,7 @@ class MyProfileFragment : Fragment() {
     private val binding: FragmentMyProfileBinding
         get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
 
-    private val myProfileService = ServicePool.myProfileService
+    private val myProfileService = ServicePool.loginPageService
 
     override fun onCreateView( // 뷰를 만든다 << 이때 초기화하면 좋음
         inflater: LayoutInflater,

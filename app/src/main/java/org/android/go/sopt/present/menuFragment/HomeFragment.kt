@@ -15,6 +15,7 @@ import org.android.go.sopt.MultiViewAdapter
 import org.android.go.sopt.databinding.FragmentHomeBinding
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
+import org.android.go.sopt.util.makeToastMessage
 import retrofit2.Call
 import retrofit2.Response
 
@@ -23,7 +24,7 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding
         get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
 
-    private val getListUsersService = ServicePool.listUsersService
+    private val getListUsersService = ServicePool.mainPageService
 
 
     override fun onCreateView(
@@ -79,12 +80,14 @@ class HomeFragment : Fragment() {
                         val userList = response.body()?.data
                         initAdapter(userList)
 
+                    }else{
+                        requireActivity().makeToastMessage("서버 실패")
                     }
 
                 }
 
                 override fun onFailure(call: Call<ResponseListUsersDto>, t: Throwable) {
-                    Toast.makeText(activity, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    requireActivity().makeToastMessage("서버 실패")
                 }
             }
         )

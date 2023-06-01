@@ -19,7 +19,7 @@ import android.text.TextWatcher as TextWatcher
 
 class SignUpActivity : AppCompatActivity() {
 
-    private val signUpService = ServicePool.signUpService
+    private val singUpService = ServicePool.loginPageService
 
     lateinit var binding: ActivitySignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.btnSignup.setOnClickListener {
             if (binding.etId.text.length in 6..10 && binding.etPassword.text.length in 8..12) {
 
-                signUpService.login(
+                singUpService.signUp(
                     with(binding) {
                         RequestSignUpDto(
                             etId.text.toString(),

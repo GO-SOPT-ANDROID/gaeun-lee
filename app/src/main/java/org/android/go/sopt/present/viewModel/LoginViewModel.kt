@@ -12,11 +12,11 @@ import retrofit2.Response
 
 class LoginViewModel:ViewModel() {
     val loginResult: MutableLiveData<ResponseLogInDto> = MutableLiveData()
-    private val logInService = ServicePool.logInService
+    private val loginService = ServicePool.loginPageService
 
 
     fun login(id: String, password: String) {
-        logInService.login(
+        loginService.login(
             RequestLogInDto(
                 id,
                 password
