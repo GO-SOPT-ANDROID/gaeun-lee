@@ -1,7 +1,7 @@
 package org.android.go.sopt.remote.service
 
 import kotlinx.serialization.Serializable
-import org.android.go.sopt.remote.model.MyProfileDto
+import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

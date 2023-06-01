@@ -1,4 +1,4 @@
-package org.android.go.sopt.present
+package org.android.go.sopt.present.menuFragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.android.go.sopt.MultiViewAdapter
 import org.android.go.sopt.databinding.FragmentHomeBinding
 import org.android.go.sopt.remote.ServicePool
-import org.android.go.sopt.remote.model.ResponseListUsersDto
+import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 import retrofit2.Call
 import retrofit2.Response
 

@@ -1,10 +1,10 @@
-package org.android.go.sopt.viewModel
+package org.android.go.sopt.present.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.android.go.sopt.remote.ServicePool
-import org.android.go.sopt.remote.model.RequestLogInDto
-import org.android.go.sopt.remote.model.ResponseLogInDto
+import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
+import org.android.go.sopt.remote.remoteData.model.ResponseLogInDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

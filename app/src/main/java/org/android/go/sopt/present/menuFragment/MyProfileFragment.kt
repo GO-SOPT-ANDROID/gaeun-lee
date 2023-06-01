@@ -1,4 +1,4 @@
-package org.android.go.sopt.present
+package org.android.go.sopt.present.menuFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import org.android.go.sopt.databinding.FragmentMyProfileBinding
-import org.android.go.sopt.myPage.LoginActivity
-import org.android.go.sopt.myPage.MySharedPreferences
+import org.android.go.sopt.present.loginPage.LoginActivity
+import org.android.go.sopt.present.loginPage.MySharedPreferences
 import org.android.go.sopt.remote.ServicePool
-import org.android.go.sopt.remote.model.MyProfileDto
+import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import org.android.go.sopt.util.makeToastMessage
 import retrofit2.Call
 import retrofit2.Response

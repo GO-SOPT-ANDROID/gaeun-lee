@@ -1,4 +1,4 @@
-package org.android.go.sopt.myPage
+package org.android.go.sopt.present.loginPage
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.MotionEvent
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.ResponseSignUpDto

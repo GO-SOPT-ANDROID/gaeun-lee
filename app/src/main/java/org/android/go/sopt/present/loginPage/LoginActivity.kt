@@ -1,4 +1,4 @@
-package org.android.go.sopt.myPage
+package org.android.go.sopt.present.loginPage
 
 import android.app.Activity
 import android.content.Intent
@@ -13,13 +13,8 @@ import androidx.activity.viewModels
 import org.android.go.sopt.MainActivity
 import org.android.go.sopt.databinding.ActivityLoginBinding
 import org.android.go.sopt.remote.ServicePool
-import org.android.go.sopt.remote.model.RequestLogInDto
-import org.android.go.sopt.remote.model.ResponseLogInDto
-import org.android.go.sopt.remote.service.LogInService
 import org.android.go.sopt.util.hideKeyboard
-import org.android.go.sopt.viewModel.LoginViewModel
-import retrofit2.Call
-import retrofit2.Response
+import org.android.go.sopt.present.viewModel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding

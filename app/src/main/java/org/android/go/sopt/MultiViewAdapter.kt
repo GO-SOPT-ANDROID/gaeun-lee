@@ -17,7 +17,7 @@ import org.android.go.sopt.data.*
 import org.android.go.sopt.databinding.ItemBottomBinding
 import org.android.go.sopt.databinding.ItemTopBinding
 import org.android.go.sopt.databinding.ItemUsersBinding
-import org.android.go.sopt.remote.model.ResponseListUsersDto
+import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 
 
 
