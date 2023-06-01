@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import org.android.go.sopt.MainActivity
 import org.android.go.sopt.databinding.ActivityLoginBinding
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.remote.model.RequestLogInDto
@@ -72,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         viewModel.loginResult.observe(this) { loginResult ->
-            val intent = Intent(this@LoginActivity, IntroduceActivity::class.java)
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or FLAG_ACTIVITY_NEW_TASK)
 
             loginResult.data?.let {
