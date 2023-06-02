@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.view.MotionEvent
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
+import org.android.go.sopt.MainActivity
 import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.ResponseSignUpDto
 import org.android.go.sopt.databinding.ActivitySignupBinding
+import org.android.go.sopt.present.viewModel.LoginViewModel
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.util.hideKeyboard
+import org.android.go.sopt.util.makeToastMessage
 import retrofit2.Call
 import retrofit2.Response
 import android.text.TextWatcher as TextWatcher
@@ -19,7 +23,7 @@ import android.text.TextWatcher as TextWatcher
 
 class SignUpActivity : AppCompatActivity() {
 
-    private val singUpService = ServicePool.loginPageService
+    private val viewModel by viewModels<LoginViewModel>()
 
     lateinit var binding: ActivitySignupBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,44 +49,22 @@ class SignUpActivity : AppCompatActivity() {
         canClickButton()
         binding.btnSignup.setOnClickListener {
             if (binding.etId.text.length in 6..10 && binding.etPassword.text.length in 8..12) {
+                with(binding){
+                    viewModel.signUp(
+                        etId.text.toString(),
+                        etPassword.text.toString(),
+                        etName.text.toString(),
+                        etSpeciality.text.toString()
+                    )
+                }
 
-                singUpService.signUp(
-                    with(binding) {
-                        RequestSignUpDto(
-                            etId.text.toString(),
-                            etPassword.text.toString(),
-                            etName.text.toString(),
-                            etSpeciality.text.toString()
-
-                        )
-                    }
-                ).enqueue(object : retrofit2.Callback<ResponseSignUpDto> {
-                    override fun onResponse(
-                        call: Call<ResponseSignUpDto>,
-                        response: Response<ResponseSignUpDto>
-                    ) {
-                        if (response.isSuccessful) {
-                            response.body()?.message?.let {
-                                Toast.makeText(
-                                    this@SignUpActivity,
-                                    response.body()?.message ?: "회원가입 성공",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                            }
-                            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                            setResult(RESULT_OK, intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this@SignUpActivity, "회원가입 실패", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseSignUpDto>, t: Throwable) {
-                        Toast.makeText(this@SignUpActivity, "서버 통신 실패", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                viewModel.signUpResult.observe(this){
+                    makeToastMessage("회원가입 성공")
+                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                }
 
             } else {
                 Snackbar.make(

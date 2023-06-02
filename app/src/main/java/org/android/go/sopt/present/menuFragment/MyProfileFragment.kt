@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import org.android.go.sopt.databinding.FragmentMyProfileBinding
 import org.android.go.sopt.present.loginPage.LoginActivity
 import org.android.go.sopt.present.loginPage.MySharedPreferences
+import org.android.go.sopt.present.viewModel.LoginViewModel
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import org.android.go.sopt.util.makeToastMessage
@@ -22,6 +24,7 @@ class MyProfileFragment : Fragment() {
         get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
 
     private val myProfileService = ServicePool.loginPageService
+    private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView( // 뷰를 만든다 << 이때 초기화하면 좋음
         inflater: LayoutInflater,
@@ -46,22 +49,14 @@ class MyProfileFragment : Fragment() {
     }
 
     private fun getProfile() {
-        myProfileService.myProfile(
-            MySharedPreferences.getUserId(requireContext())
-        ).enqueue(object : retrofit2.Callback<MyProfileDto> {
-            override fun onResponse(call: Call<MyProfileDto>, response: Response<MyProfileDto>) {
-                if (response.isSuccessful) {
-                    binding.name.text = "이름 : ${response.body()?.data?.name}"
-                    binding.specialty.text = "특기 : ${response.body()?.data?.skill}"
-                } else {
-                    requireContext().makeToastMessage("서버 실패")
-                }
-            }
 
-            override fun onFailure(call: Call<MyProfileDto>, t: Throwable) {
-                requireContext().makeToastMessage("서버 실패")
-            }
-        })
+        viewModel.myProfile(MySharedPreferences.getUserId(requireContext()))
+
+        viewModel.myProfile.observe(this){
+            binding.name.text = "이름 : ${it.data.name}"
+            binding.specialty.text = "특기 : ${it.data.skill}"
+        }
+
     }
 
     private fun clickLogOut() {

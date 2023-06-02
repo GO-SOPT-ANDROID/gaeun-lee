@@ -15,17 +15,11 @@ import org.android.go.sopt.databinding.ActivityLoginBinding
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.util.hideKeyboard
 import org.android.go.sopt.present.viewModel.LoginViewModel
+import org.android.go.sopt.util.makeToastMessage
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
-    private lateinit var id: String
-    private lateinit var password: String
-    private lateinit var name: String
-    private lateinit var speciality: String
 
-    private val logInService = ServicePool.loginPageService
-
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +52,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun clickLogin() {
         binding.btnLogin.setOnClickListener {
-
-
             viewModel.login(
                 binding.etId.text.toString(),
                 binding.etPassword.text.toString()
@@ -80,14 +72,8 @@ class LoginActivity : AppCompatActivity() {
             finish()
 
             loginResult.message?.let {
-                Toast.makeText(
-                    this@LoginActivity,
-                    loginResult.message ?: "로그인 성공",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                makeToastMessage("로그인 성공")
             }
-
 
         }
 
@@ -96,20 +82,9 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun clickSignup() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    id = result.data?.getStringExtra("id") ?: ""
-                    password = result.data?.getStringExtra("password") ?: ""
-                    name = result.data?.getStringExtra("name") ?: ""
-                    speciality = result.data?.getStringExtra("speciality") ?: ""
-
-
-                }
-            }
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
-            resultLauncher.launch(intent)
+            startActivity(intent)
         }
     }
 

@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StableIdKeyProvider
@@ -13,6 +15,8 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.android.go.sopt.MultiViewAdapter
 import org.android.go.sopt.databinding.FragmentHomeBinding
+import org.android.go.sopt.present.viewModel.LoginViewModel
+import org.android.go.sopt.present.viewModel.MainPageViewModel
 import org.android.go.sopt.remote.ServicePool
 import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 import org.android.go.sopt.util.makeToastMessage
@@ -25,6 +29,7 @@ class HomeFragment : Fragment() {
         get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
 
     private val getListUsersService = ServicePool.mainPageService
+    private val viewModel by viewModels<MainPageViewModel>()
 
 
     override fun onCreateView(
@@ -70,27 +75,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserList() {
-        getListUsersService.getListUsers().enqueue(
-            object : retrofit2.Callback<ResponseListUsersDto> {
-                override fun onResponse(
-                    call: Call<ResponseListUsersDto>,
-                    response: Response<ResponseListUsersDto>
-                ) {
-                    if (response.isSuccessful) {
-                        val userList = response.body()?.data
-                        initAdapter(userList)
-
-                    }else{
-                        requireActivity().makeToastMessage("서버 실패")
-                    }
-
-                }
-
-                override fun onFailure(call: Call<ResponseListUsersDto>, t: Throwable) {
-                    requireActivity().makeToastMessage("서버 실패")
-                }
-            }
-        )
+        viewModel.gerUserList()
+        viewModel.userList.observe(this){
+            initAdapter(it.data)
+        }
     }
 
 }
