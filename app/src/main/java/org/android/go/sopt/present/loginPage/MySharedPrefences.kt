@@ -1,4 +1,4 @@
-package org.android.go.sopt.myPage
+package org.android.go.sopt.present.loginPage
 
 import android.content.Context
 import android.content.SharedPreferences

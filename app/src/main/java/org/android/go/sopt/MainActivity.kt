@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import org.android.go.sopt.databinding.ActivityMainBinding
-import org.android.go.sopt.present.GalleryFragment
-import org.android.go.sopt.present.HomeFragment
-import org.android.go.sopt.present.SearchFragment
+import org.android.go.sopt.present.menuFragment.GalleryFragment
+import org.android.go.sopt.present.menuFragment.HomeFragment
+import org.android.go.sopt.present.menuFragment.MyProfileFragment
+import org.android.go.sopt.present.menuFragment.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.menu_gallery -> {
                     changeFragment(GalleryFragment())
+                    return@setOnItemSelectedListener true
+                }
+                R.id.menu_profile -> {
+                    changeFragment(MyProfileFragment())
                     return@setOnItemSelectedListener true
                 }
                 else -> {

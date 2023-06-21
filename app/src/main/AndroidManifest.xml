@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -19,10 +22,7 @@
             android:exported="true"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity
-            android:name=".myPage.IntroduceActivity"
-            android:exported="false" />
-        <activity
-            android:name=".myPage.LoginActivity"
+            android:name=".present.loginPage.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".myPage.SignUpActivity"
+            android:name=".present.loginPage.SignUpActivity"
             android:exported="false" />
     </application>
 

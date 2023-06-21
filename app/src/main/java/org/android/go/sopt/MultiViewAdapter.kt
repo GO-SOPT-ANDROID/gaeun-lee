@@ -17,7 +17,7 @@ import org.android.go.sopt.data.*
 import org.android.go.sopt.databinding.ItemBottomBinding
 import org.android.go.sopt.databinding.ItemTopBinding
 import org.android.go.sopt.databinding.ItemUsersBinding
-import org.android.go.sopt.remote.model.ResponseListUsersDto
+import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 
 
 
@@ -31,8 +31,6 @@ class MultiViewAdapter(context: Context) :
 
     private val inflater by lazy { LayoutInflater.from(context) }
     private lateinit var selectionTracker: SelectionTracker<Long>
-    private val context = context
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
@@ -114,7 +112,7 @@ class MultiViewAdapter(context: Context) :
 
             binding.tvUserName.text = item.first_name + item.last_name
             binding.tvUserEmail.text = item.email
-            Glide.with(context).load(item.avatar).into(binding.ivAvatar)
+            Glide.with(binding.root).load(item.avatar).into(binding.ivAvatar)
 
             if (selectionTracker != null && selectionTracker.isSelected(absoluteAdapterPosition.toLong())) {
                 binding.ivSelect.setImageResource(R.drawable.ic_home)

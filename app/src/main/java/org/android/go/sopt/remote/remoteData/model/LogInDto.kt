@@ -1,4 +1,4 @@
-package org.android.go.sopt.remote.model
+package org.android.go.sopt.remote.remoteData.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -18,7 +18,7 @@ data class ResponseLogInDto(
     @SerialName("message")
     val message: String,
     @SerialName("data")
-    val data:LogInData?
+    val data: LogInData?
 ) {
     @Serializable
     data class LogInData(
