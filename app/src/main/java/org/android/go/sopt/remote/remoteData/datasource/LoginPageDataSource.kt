@@ -7,20 +7,17 @@ import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
 import org.android.go.sopt.remote.remoteData.model.ResponseLogInDto
 import org.android.go.sopt.remote.service.LogInPageService
-import retrofit2.Response
 
-class LoginPageDataSource(private val apiService:LogInPageService):LoginPageRepo{
-    override suspend fun login(request: RequestLogInDto): Response<ResponseLogInDto> {
+class LoginPageDataSource(private val apiService: LogInPageService) : LoginPageRepo {
+    override suspend fun login(request: RequestLogInDto): ResponseLogInDto {
         return apiService.login(request)
     }
 
-    override suspend fun signUp(request: RequestSignUpDto): Response<ResponseSignUpDto> {
+    override suspend fun signUp(request: RequestSignUpDto): ResponseSignUpDto {
         return apiService.signUp(request)
     }
 
-    override suspend fun myProfile(userId: String): Response<MyProfileDto> {
+    override suspend fun myProfile(userId: String): MyProfileDto {
         return apiService.myProfile(userId)
     }
-
-
 }
