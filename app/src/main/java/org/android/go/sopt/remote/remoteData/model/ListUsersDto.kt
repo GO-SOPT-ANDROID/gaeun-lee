@@ -3,7 +3,6 @@ package org.android.go.sopt.remote.remoteData.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class ResponseListUsersDto(
     @SerialName("page")

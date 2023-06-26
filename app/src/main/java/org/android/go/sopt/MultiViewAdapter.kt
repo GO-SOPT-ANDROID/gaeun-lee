@@ -19,15 +19,12 @@ import org.android.go.sopt.databinding.ItemTopBinding
 import org.android.go.sopt.databinding.ItemUsersBinding
 import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 
-
-
 class MultiViewAdapter(context: Context) :
     ListAdapter<ResponseListUsersDto.Data, ViewHolder>(diffUtil) {
 
     init { // selectionTracker를 위한 설정
         setHasStableIds(true)
     }
-
 
     private val inflater by lazy { LayoutInflater.from(context) }
     private lateinit var selectionTracker: SelectionTracker<Long>
@@ -50,8 +47,6 @@ class MultiViewAdapter(context: Context) :
                 val binding: ItemUsersBinding = ItemUsersBinding.inflate(inflater, parent, false)
                 return UsersListViewHolder(binding)
             }
-
-
         }
     }
 
@@ -59,27 +54,21 @@ class MultiViewAdapter(context: Context) :
         return position.toLong()
     }
 
-
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             0 -> MULTI_TYPE1
             currentList.size + 1 -> MULTI_TYPE3
             else -> MULTI_TYPE2
-
         }
-
     }
 
     override fun getItemCount(): Int {
         return currentList.size + 2 // UserList + Top + Bottom 이므로 +2를 해준다
     }
 
-
     fun setSelectionTracker(selectionTracker: SelectionTracker<Long>) {
-
         this.selectionTracker = selectionTracker
     }
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (getItemViewType(position)) {
@@ -96,7 +85,6 @@ class MultiViewAdapter(context: Context) :
                 holder.setIsRecyclable(false)
             }
         }
-
     }
 
     class TopRvTitleViewHolder(private val binding: ItemTopBinding) : ViewHolder(binding.root) {
@@ -109,7 +97,6 @@ class MultiViewAdapter(context: Context) :
         ViewHolder(binding.root) {
 
         fun onBind(item: ResponseListUsersDto.Data) {
-
             binding.tvUserName.text = item.first_name + item.last_name
             binding.tvUserEmail.text = item.email
             Glide.with(binding.root).load(item.avatar).into(binding.ivAvatar)
@@ -119,8 +106,6 @@ class MultiViewAdapter(context: Context) :
             } else {
                 binding.ivSelect.setImageResource(R.drawable.ic_image)
             }
-
-
         }
 
         fun getItemDetails(viewHolder: RecyclerView.ViewHolder?): ItemDetailsLookup.ItemDetails<Long> {
@@ -148,26 +133,23 @@ class MultiViewAdapter(context: Context) :
         fun onBind() {
             binding.tvMusicEnd.text = "후원사 SOPT"
         }
-
     }
-
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<ResponseListUsersDto.Data>() {
             override fun areItemsTheSame(
                 oldItem: ResponseListUsersDto.Data,
-                newItem: ResponseListUsersDto.Data
+                newItem: ResponseListUsersDto.Data,
             ): Boolean {
                 return oldItem === newItem
             }
 
             override fun areContentsTheSame(
                 oldItem: ResponseListUsersDto.Data,
-                newItem: ResponseListUsersDto.Data
+                newItem: ResponseListUsersDto.Data,
             ): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 
@@ -183,6 +165,4 @@ class MultiViewAdapter(context: Context) :
             return null
         }
     }
-
-
 }
