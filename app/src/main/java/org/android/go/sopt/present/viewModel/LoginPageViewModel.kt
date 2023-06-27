@@ -5,14 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
 import org.android.go.sopt.remote.remoteData.repoImpl.LoginPageRepoImpl
 import org.android.go.sopt.util.Event
 import org.android.go.sopt.util.MyApplication
 
 class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : ViewModel() {
-    private val _loginResult = MutableLiveData(Event(false))
+    private val _loginResult = MutableLiveData<Event<Boolean>>()
     val loginResult: LiveData<Event<Boolean>> get() = _loginResult
+
+    private val _signUpResult = MutableLiveData<Boolean>()
+    val signUpResult: LiveData<Boolean> get() = _signUpResult
 
     fun login(request: RequestLogInDto) = viewModelScope.launch {
         kotlin.runCatching {
@@ -22,6 +26,16 @@ class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : Vie
             MyApplication.mySharedPreferences.setUserId(request.id)
         }.onFailure {
             _loginResult.value = Event(false)
+        }
+    }
+
+    fun signUp(request: RequestSignUpDto) = viewModelScope.launch {
+        kotlin.runCatching {
+            loginPageRepoImpl.signUp(request)
+        }.onSuccess {
+            _signUpResult.value = true
+        }.onFailure {
+            _signUpResult.value = false
         }
     }
 }
