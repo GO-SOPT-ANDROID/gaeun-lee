@@ -8,7 +8,7 @@ import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
 import org.android.go.sopt.remote.remoteData.model.ResponseLogInDto
 
-class LoginPageRepoImpl(private val loginPageDataSource: LoginPageDataSource):LoginPageRepo {
+class LoginPageRepoImpl(private val loginPageDataSource: LoginPageDataSource) : LoginPageRepo {
 
     override suspend fun login(request: RequestLogInDto): ResponseLogInDto {
         return loginPageDataSource.login(request)
