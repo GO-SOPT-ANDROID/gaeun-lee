@@ -6,5 +6,5 @@ import retrofit2.http.GET
 interface MainPageService {
 
     @GET("users")
-    fun getListUsers(): ResponseListUsersDto
+    suspend fun getListUsers(): ResponseListUsersDto
 }
