@@ -33,9 +33,10 @@ class MyProfileFragment : Fragment() {
 
     // 뷰가 만들어졌다.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.vmMyProfile = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         super.onViewCreated(view, savedInstanceState)
         getProfile()
-        observeMyProfile()
         clickLogOut()
     }
 
