@@ -1,11 +1,13 @@
 package org.android.go.sopt.present.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import org.android.go.sopt.RequestSignUpDto
+import org.android.go.sopt.remote.remoteData.model.MyProfileDto
 import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
 import org.android.go.sopt.remote.remoteData.repoImpl.LoginPageRepoImpl
 import org.android.go.sopt.util.Event
@@ -17,6 +19,9 @@ class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : Vie
 
     private val _signUpResult = MutableLiveData<Boolean>()
     val signUpResult: LiveData<Boolean> get() = _signUpResult
+
+    private val _getMyProfile = MutableLiveData<MyProfileDto>()
+    val getMyProfile: LiveData<MyProfileDto> get() = _getMyProfile
 
     fun login(request: RequestLogInDto) = viewModelScope.launch {
         kotlin.runCatching {
@@ -36,6 +41,16 @@ class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : Vie
             _signUpResult.value = true
         }.onFailure {
             _signUpResult.value = false
+        }
+    }
+
+    fun getMyProfile(userId: String) = viewModelScope.launch {
+        kotlin.runCatching {
+            loginPageRepoImpl.myProfile(userId)
+        }.onSuccess { response ->
+            _getMyProfile.value = response
+        }.onFailure {
+            Log.d("error", "서버 통신 실패")
         }
     }
 }
