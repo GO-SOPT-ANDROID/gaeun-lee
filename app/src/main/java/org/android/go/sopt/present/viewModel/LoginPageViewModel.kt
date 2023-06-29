@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.remote.remoteData.model.MyProfileDto
@@ -23,8 +24,24 @@ class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : Vie
     private val _getMyProfile = MutableLiveData<MyProfileDto>()
     val getMyProfile: LiveData<MyProfileDto> get() = _getMyProfile
 
-    val signUpId: MutableLiveData<String> = MutableLiveData("")
-    val signUpPwd: MutableLiveData<String> = MutableLiveData("")
+    val signUpId = MutableStateFlow("")
+    val signUpPwd = MutableStateFlow("")
+
+    val isValidId: StateFlow<Boolean> = signUpId.map { inputId ->
+        inputId.matches(Regex(idPattern))
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), true)
+
+    val isValidPwd: StateFlow<Boolean> = signUpPwd.map { inputPwd ->
+        inputPwd.matches(Regex(pwPattern))
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        false,
+    )
+    val canClickSignUpBtn: StateFlow<Boolean> =
+        combine(isValidId, isValidPwd) { isValidId, isValidPwd ->
+            isValidId && isValidPwd
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 
     fun login(request: RequestLogInDto) = viewModelScope.launch {
         kotlin.runCatching {
@@ -55,5 +72,10 @@ class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : Vie
         }.onFailure {
             Log.d("error", "서버 통신 실패")
         }
+    }
+
+    companion object {
+        const val idPattern = "^(?=.*\\d)(?=.*[a-zA-Z]).{6,10}\$"
+        const val pwPattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{6,12}\$"
     }
 }
