@@ -23,6 +23,9 @@ class LoginPageViewModel(private val loginPageRepoImpl: LoginPageRepoImpl) : Vie
     private val _getMyProfile = MutableLiveData<MyProfileDto>()
     val getMyProfile: LiveData<MyProfileDto> get() = _getMyProfile
 
+    val signUpId: MutableLiveData<String> = MutableLiveData("")
+    val signUpPwd: MutableLiveData<String> = MutableLiveData("")
+
     fun login(request: RequestLogInDto) = viewModelScope.launch {
         kotlin.runCatching {
             loginPageRepoImpl.login(request)

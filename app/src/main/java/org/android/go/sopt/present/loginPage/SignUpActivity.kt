@@ -1,20 +1,22 @@
 package org.android.go.sopt.present.loginPage
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.Editable
 import android.view.MotionEvent
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import org.android.go.sopt.MainActivity
+import org.android.go.sopt.R
 import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.databinding.ActivitySignupBinding
 import org.android.go.sopt.present.viewModel.LoginPageViewModel
 import org.android.go.sopt.util.ViewModelFactory
 import org.android.go.sopt.util.hideKeyboard
 import org.android.go.sopt.util.makeToastMessage
-import android.text.TextWatcher as TextWatcher
+import java.util.regex.Pattern
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -25,6 +27,13 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        with(binding) {
+            vmSignUp = viewModel
+            lifecycleOwner = this@SignUpActivity
+            etId.doAfterTextChanged { checkValidSignUpId() }
+            etPassword.doAfterTextChanged { checkValidSignUpPwd() }
+        }
 
         signUp()
         observeIsSignUpSuccess()
@@ -42,21 +51,16 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signUp() {
-        canClickButton()
         binding.btnSignup.setOnClickListener {
-            if (binding.etId.text.length in 6..10 && binding.etPassword.text.length in 8..12) {
-                with(binding) {
-                    viewModel.signUp(
-                        RequestSignUpDto(
-                            etId.text.toString(),
-                            etPassword.text.toString(),
-                            etName.text.toString(),
-                            etSpeciality.text.toString(),
-                        ),
-                    )
-                }
-            } else {
-                makeToastMessage("회원가입 조건 미충족")
+            with(binding) {
+                viewModel.signUp(
+                    RequestSignUpDto(
+                        etId.text.toString(),
+                        etPassword.text.toString(),
+                        etName.text.toString(),
+                        etSpeciality.text.toString(),
+                    ),
+                )
             }
         }
     }
@@ -75,28 +79,47 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun canClickButton() {
-        with(binding) {
-            btnSignup.isEnabled = false
+    private fun checkValidSignUpId(): Boolean {
+        var correctId = false
 
-            val textWatcher: TextWatcher = object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
+        val idPattern = "^(?=.*\\d)(?=.*[a-zA-Z]).{6,10}\$"
 
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    if (etId.text.length in 6..10 && etPassword.text.length in 8..12) {
-                        btnSignup.isEnabled = true
-                    }
-                }
-
-                override fun afterTextChanged(p0: Editable?) {
-                }
+        viewModel.signUpId.observe(this) { id ->
+            correctId = Pattern.matches(idPattern, id)
+            if (!correctId) {
+                binding.tvIdWarn.visibility = View.VISIBLE
+                correctId = false
+                binding.etId.backgroundTintList = ColorStateList.valueOf(getColor(R.color.red_500))
+            } else {
+                binding.tvIdWarn.visibility = View.GONE
+                correctId = true
+                binding.etId.backgroundTintList = ColorStateList.valueOf(getColor(R.color.black))
             }
-
-            etId.addTextChangedListener(textWatcher)
-            etPassword.addTextChangedListener(textWatcher)
-            etName.addTextChangedListener(textWatcher)
-            etSpeciality.addTextChangedListener(textWatcher)
         }
+
+        return correctId
+    }
+
+    private fun checkValidSignUpPwd(): Boolean {
+        var correctPw = false
+
+        val pwPattern = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[\$@\$!%*#?&]).{6,12}\$"
+
+        viewModel.signUpPwd.observe(this) { pwd ->
+            correctPw = Pattern.matches(pwPattern, pwd)
+            if (!correctPw) {
+                binding.tvPwWarn.visibility = View.VISIBLE
+                correctPw = false
+                binding.etPassword.backgroundTintList =
+                    ColorStateList.valueOf(getColor(R.color.red_500))
+            } else {
+                binding.tvPwWarn.visibility = View.GONE
+                correctPw = true
+                binding.etPassword.backgroundTintList =
+                    ColorStateList.valueOf(getColor(R.color.black))
+            }
+        }
+
+        return correctPw
     }
 }
