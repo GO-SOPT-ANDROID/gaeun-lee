@@ -10,7 +10,7 @@ import org.android.go.sopt.databinding.FragmentSearchBinding
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding: FragmentSearchBinding
-        get() = requireNotNull(_binding) { "앗 ! _binding이 null이다 !" }
+        get() = requireNotNull(_binding) { "binding is null" }
 
     override fun onCreateView(
         inflater: LayoutInflater,
