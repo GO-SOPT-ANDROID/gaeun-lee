@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GO SOPT Android</string>
+    <string name="myProfile_name">이름 : %s</string>
+    <string name="myProfile_skill">특기 : %s</string>
 </resources>

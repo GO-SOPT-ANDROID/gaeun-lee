@@ -1,35 +1,26 @@
 package org.android.go.sopt.present.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.android.go.sopt.remote.ServicePool
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.android.go.sopt.remote.remoteData.repoImpl.MainPageRepoImpl
 
-class MainPageViewModel : ViewModel() {
-    private val mainPageService = ServicePool.mainPageService
+class MainPageViewModel(private val mainPageRepoImpl: MainPageRepoImpl) : ViewModel() {
 
-    private val _userList = MutableLiveData<ResponseListUsersDto>()
-    val userList: LiveData<ResponseListUsersDto> get() = _userList
+    private val _userList = MutableLiveData<List<ResponseListUsersDto.Data>>()
+    val userList: LiveData<List<ResponseListUsersDto.Data>> get() = _userList
 
-    fun gerUserList() {
-        mainPageService.getListUsers().enqueue(object : Callback<ResponseListUsersDto> {
-            override fun onResponse(
-                call: Call<ResponseListUsersDto>,
-                response: Response<ResponseListUsersDto>
-            ) {
-                if (response.isSuccessful){
-                    _userList.value  = response.body()
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseListUsersDto>, t: Throwable) {
-
-            }
-        })
+    fun getUserList() = viewModelScope.launch {
+        kotlin.runCatching {
+            mainPageRepoImpl.getUserList()
+        }.onSuccess { response ->
+            _userList.value = response.data
+        }.onFailure {
+            Log.d("mainPageViewModel", "서버 에러 발생")
+        }
     }
-
 }

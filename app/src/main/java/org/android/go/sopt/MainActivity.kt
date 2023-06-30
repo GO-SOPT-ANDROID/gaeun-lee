@@ -1,7 +1,7 @@
 package org.android.go.sopt
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import org.android.go.sopt.databinding.ActivityMainBinding
 import org.android.go.sopt.present.menuFragment.GalleryFragment
@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -24,12 +23,11 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().add(R.id.fcv_main, HomeFragment()).commit()
         }
 
-
         binding.bnvMain.setOnItemSelectedListener { item ->
             // 선택된 탭의 itemId와 현재 보여지고 있는 FragmentContainerView의 itemId가 같은 경우
             // 즉 같은 탭을 다시 선택한 경우에 scrollTo 메소드를 호출
-            if (binding.bnvMain.selectedItemId == item.itemId){
-                binding.fcvMain.scrollTo(0,0)
+            if (binding.bnvMain.selectedItemId == item.itemId) {
+                binding.fcvMain.scrollTo(0, 0)
             }
 
             when (item.itemId) {
@@ -52,12 +50,8 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     false
                 }
-
             }
-
-
         }
-
     }
 
     private fun changeFragment(fragment: Fragment) {
@@ -65,8 +59,5 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.fcv_main, fragment)
             .commit()
-
     }
-
-
 }

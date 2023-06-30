@@ -6,19 +6,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MyProfileDto(
     @SerialName("status")
-    val status : Int,
+    val status: Int,
     @SerialName("message")
-    val message : String,
+    val message: String,
     @SerialName("data")
-    val data : InfoData
-){
+    val data: InfoData,
+) {
     @Serializable
     data class InfoData(
         @SerialName("id")
-        val id : String,
+        val id: String,
         @SerialName("name")
-        val name : String,
+        val name: String,
         @SerialName("skill")
-        val skill : String
+        val skill: String,
     )
 }

@@ -18,7 +18,7 @@ class GalleryFragment : Fragment() {
     override fun onCreateView( // 뷰를 만든다 << 이때 초기화하면 좋음
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View { // 이제 반환하는 View가 Null일 수 없기 때문에, ?를 지워주셔도 됩니다.
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         return binding.root
@@ -33,8 +33,6 @@ class GalleryFragment : Fragment() {
         TabLayoutMediator(binding.tabLayout, binding.pagerHome) { tab, position ->
             tab.text = "Fragment ${position + 1}"
         }.attach()
-
-
     }
 
     override fun onDestroyView() {
