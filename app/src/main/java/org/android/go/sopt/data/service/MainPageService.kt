@@ -1,6 +1,6 @@
-package org.android.go.sopt.remote.service
+package org.android.go.sopt.data.service
 
-import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
+import org.android.go.sopt.data.model.ResponseListUsersDto
 import retrofit2.http.GET
 
 interface MainPageService {

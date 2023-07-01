@@ -1,4 +1,4 @@
-package org.android.go.sopt.util
+package org.android.go.sopt.data
 
 import android.content.Context
 import android.content.SharedPreferences

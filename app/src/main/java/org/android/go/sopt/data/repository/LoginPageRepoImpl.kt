@@ -1,12 +1,12 @@
-package org.android.go.sopt.remote.remoteData.repoImpl
+package org.android.go.sopt.data.repository
 
 import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.ResponseSignUpDto
-import org.android.go.sopt.remote.domain.LoginPageRepo
-import org.android.go.sopt.remote.remoteData.datasource.LoginPageDataSource
-import org.android.go.sopt.remote.remoteData.model.MyProfileDto
-import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
-import org.android.go.sopt.remote.remoteData.model.ResponseLogInDto
+import org.android.go.sopt.data.datasource.LoginPageDataSource
+import org.android.go.sopt.data.model.MyProfileDto
+import org.android.go.sopt.data.model.RequestLogInDto
+import org.android.go.sopt.data.model.ResponseLogInDto
+import org.android.go.sopt.domain.LoginPageRepo
 
 class LoginPageRepoImpl(private val loginPageDataSource: LoginPageDataSource) : LoginPageRepo {
 

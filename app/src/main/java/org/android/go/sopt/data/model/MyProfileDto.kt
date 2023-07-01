@@ -1,27 +1,19 @@
-package org.android.go.sopt.remote.remoteData.model
+package org.android.go.sopt.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RequestLogInDto(
-    @SerialName("id")
-    val id: String,
-    @SerialName("password")
-    val password: String,
-)
-
-@Serializable
-data class ResponseLogInDto(
+data class MyProfileDto(
     @SerialName("status")
     val status: Int,
     @SerialName("message")
     val message: String,
     @SerialName("data")
-    val data: LogInData?,
+    val data: InfoData,
 ) {
     @Serializable
-    data class LogInData(
+    data class InfoData(
         @SerialName("id")
         val id: String,
         @SerialName("name")

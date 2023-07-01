@@ -14,10 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import org.android.go.sopt.data.*
+import org.android.go.sopt.data.model.ResponseListUsersDto
 import org.android.go.sopt.databinding.ItemBottomBinding
 import org.android.go.sopt.databinding.ItemTopBinding
 import org.android.go.sopt.databinding.ItemUsersBinding
-import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 
 class MultiViewAdapter(context: Context) :
     ListAdapter<ResponseListUsersDto.Data, ViewHolder>(diffUtil) {

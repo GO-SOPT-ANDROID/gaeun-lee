@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
-import org.android.go.sopt.remote.remoteData.repoImpl.MainPageRepoImpl
+import org.android.go.sopt.data.model.ResponseListUsersDto
+import org.android.go.sopt.data.repository.MainPageRepoImpl
 
 class MainPageViewModel(private val mainPageRepoImpl: MainPageRepoImpl) : ViewModel() {
 

@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.android.go.sopt.RequestSignUpDto
-import org.android.go.sopt.remote.remoteData.model.MyProfileDto
-import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
-import org.android.go.sopt.remote.remoteData.repoImpl.LoginPageRepoImpl
+import org.android.go.sopt.data.model.MyProfileDto
+import org.android.go.sopt.data.model.RequestLogInDto
+import org.android.go.sopt.data.repository.LoginPageRepoImpl
 import org.android.go.sopt.util.Event
 import org.android.go.sopt.util.MyApplication
 

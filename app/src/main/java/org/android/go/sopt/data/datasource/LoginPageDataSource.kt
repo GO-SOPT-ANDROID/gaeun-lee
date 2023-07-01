@@ -1,12 +1,12 @@
-package org.android.go.sopt.remote.remoteData.datasource
+package org.android.go.sopt.data.datasource
 
 import org.android.go.sopt.RequestSignUpDto
 import org.android.go.sopt.ResponseSignUpDto
-import org.android.go.sopt.remote.domain.LoginPageRepo
-import org.android.go.sopt.remote.remoteData.model.MyProfileDto
-import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
-import org.android.go.sopt.remote.remoteData.model.ResponseLogInDto
-import org.android.go.sopt.remote.service.LogInPageService
+import org.android.go.sopt.data.model.MyProfileDto
+import org.android.go.sopt.data.model.RequestLogInDto
+import org.android.go.sopt.data.model.ResponseLogInDto
+import org.android.go.sopt.data.service.LogInPageService
+import org.android.go.sopt.domain.LoginPageRepo
 
 class LoginPageDataSource(private val apiService: LogInPageService) : LoginPageRepo {
     override suspend fun login(request: RequestLogInDto): ResponseLogInDto {

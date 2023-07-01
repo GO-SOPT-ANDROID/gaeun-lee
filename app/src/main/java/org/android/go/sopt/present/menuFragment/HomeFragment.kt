@@ -12,9 +12,9 @@ import androidx.recyclerview.selection.StableIdKeyProvider
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.android.go.sopt.MultiViewAdapter
+import org.android.go.sopt.data.model.ResponseListUsersDto
 import org.android.go.sopt.databinding.FragmentHomeBinding
 import org.android.go.sopt.present.viewModel.MainPageViewModel
-import org.android.go.sopt.remote.remoteData.model.ResponseListUsersDto
 import org.android.go.sopt.util.ViewModelFactory
 
 class HomeFragment : Fragment() {

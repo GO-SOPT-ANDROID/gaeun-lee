@@ -2,13 +2,13 @@ package org.android.go.sopt.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.android.go.sopt.data.ServicePool
+import org.android.go.sopt.data.datasource.LoginPageDataSource
+import org.android.go.sopt.data.datasource.MainPageDataSource
+import org.android.go.sopt.data.repository.LoginPageRepoImpl
+import org.android.go.sopt.data.repository.MainPageRepoImpl
 import org.android.go.sopt.present.viewModel.LoginPageViewModel
 import org.android.go.sopt.present.viewModel.MainPageViewModel
-import org.android.go.sopt.remote.ServicePool
-import org.android.go.sopt.remote.remoteData.datasource.LoginPageDataSource
-import org.android.go.sopt.remote.remoteData.datasource.MainPageDataSource
-import org.android.go.sopt.remote.remoteData.repoImpl.LoginPageRepoImpl
-import org.android.go.sopt.remote.remoteData.repoImpl.MainPageRepoImpl
 
 class ViewModelFactory : ViewModelProvider.Factory {
 

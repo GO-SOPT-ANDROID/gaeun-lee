@@ -7,9 +7,9 @@ import android.view.MotionEvent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import org.android.go.sopt.MainActivity
+import org.android.go.sopt.data.model.RequestLogInDto
 import org.android.go.sopt.databinding.ActivityLoginBinding
 import org.android.go.sopt.present.viewModel.LoginPageViewModel
-import org.android.go.sopt.remote.remoteData.model.RequestLogInDto
 import org.android.go.sopt.util.*
 
 class LoginActivity : AppCompatActivity() {
