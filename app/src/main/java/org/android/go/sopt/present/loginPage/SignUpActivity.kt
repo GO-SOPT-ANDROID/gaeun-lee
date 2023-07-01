@@ -45,16 +45,16 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun signUp() {
         binding.btnSignup.setOnClickListener {
-            with(binding) {
-                viewModel.signUp(
+            viewModel.signUp(
+                with(binding) {
                     RequestSignUpDto(
                         etId.text.toString(),
                         etPassword.text.toString(),
                         etName.text.toString(),
                         etSpeciality.text.toString(),
-                    ),
-                )
-            }
+                    )
+                },
+            )
         }
     }
 
