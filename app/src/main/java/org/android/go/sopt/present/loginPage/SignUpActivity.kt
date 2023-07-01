@@ -24,7 +24,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            vmSignUp = viewModel
+            vm = viewModel
             lifecycleOwner = this@SignUpActivity
         }
 
