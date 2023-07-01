@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="vmMyProfile"
+            name="vm"
             type="org.android.go.sopt.present.viewModel.LoginPageViewModel"/>
     </data>
 
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{@string/myProfile_name(vmMyProfile.getMyProfile.data.name)}"
+            android:text="@{@string/myProfile_name(vm.getMyProfile.data.name)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/introduceImage" />
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@{@string/myProfile_name(vmMyProfile.getMyProfile.data.skill)}"
+            android:text="@{@string/myProfile_name(vm.getMyProfile.data.skill)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/name" />
