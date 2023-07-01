@@ -6,7 +6,7 @@ import org.android.go.sopt.data.model.MyProfileDto
 import org.android.go.sopt.data.model.RequestLogInDto
 import org.android.go.sopt.data.model.ResponseLogInDto
 
-interface LoginPageRepo {
+interface LoginPageRepository {
     suspend fun login(request: RequestLogInDto): ResponseLogInDto
 
     suspend fun signUp(request: RequestSignUpDto): ResponseSignUpDto

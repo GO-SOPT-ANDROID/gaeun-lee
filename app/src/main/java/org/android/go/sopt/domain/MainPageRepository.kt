@@ -2,7 +2,7 @@ package org.android.go.sopt.domain
 
 import org.android.go.sopt.data.model.ResponseListUsersDto
 
-interface MainPageRepo {
+interface MainPageRepository {
 
     suspend fun getUserList(): ResponseListUsersDto
 }
